@@ -28,7 +28,7 @@ Tease: residence
 			<meta itemprop="streetAddress" content="{{ residence.address }}">
 		</div>
 		<meta itemprop="priceRange" content="{{ residence.price.monthly_prices | default( '0' ) }}">
-		{# @TODO Get phone number from settings #}
+		{# @TODO Get default telephone number from settings #}
 		<meta itemprop="telephone" content="{{ residence.phone | default( '05 46 95 09 56' )}}">
 	</footer>
 </article>

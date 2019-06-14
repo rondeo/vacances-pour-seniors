@@ -1,0 +1,12 @@
+/**
+ * Badge
+ */
+.Badge {
+	border-radius: $grid-gutter-width / 6;
+	font-size: $base-font-size-px / power( $scale-factor, 1 );
+
+	&--lightest {
+		border: 1px solid the_color( gray, light );
+		color: the_color( gray, dark );
+	}
+}

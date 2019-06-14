@@ -9,20 +9,31 @@ Tease: residence
 @see https://schema.org/
 
 #}
+<meta itemprop="url" content="{{ residence.link }}" />
+
 <article id="tease-residence-{{ residence.id }}" class="Tease-residence" role="article" itemscope itemtype="http://schema.org/Resort">
-	<header class="Tease-residence__header">
 
-		<img itemprop="image" content="{{ residence.link }}" src="{{ Image( get_the_residence_thumbnail( residence.id ) ).src | resize( 289, 176 ) }}" alt="{{ get_the_residence_type_name( residence.id ) }} {{ residence.title }} {{ get_the_residence_group_name( residence.id ) }}" width="289" height="176">
+	{% spaceless %}
+		<a class="Tease-residence__header" href="{{ residence.link }}">
+			{% if get_the_residence_thumbnail( residence.id ) %}
+				<img class="Tease-residence__thumbnail" itemprop="image" content="{{ Image( get_the_residence_thumbnail( residence.id ) ).src }}" src="{{ Image( get_the_residence_thumbnail( residence.id ) ).src | resize( 289, 176 ) }}" alt="{{ get_the_residence_type_name( residence.id ) }} {{ residence.title }} {{ get_the_residence_group_name( residence.id ) }}" width="289" height="176">
+			{% endif %}
+		</a>
+	{% endspaceless %}
 
-	</header>
 	<div class="Tease-residence__body">
-		<h2 itemprop="name" class="Tease-residence__title">{{ get_the_residence_type_name( residence.id ) }} {{ residence.title }} {{ get_the_residence_group_name( residence.id ) }}</h2>
-		<div class="Tease-residence__text">{{ residence.get_field( 'presentation' ) }}</div>
+		<h2 class="Tease-residence__title h4" title="{{ get_the_residence_type_name( residence.id ) }} {{ get_the_residence_group_name( residence.id ) }} {{ residence.title }}">
+			<meta itemprop="name" content="{{ get_the_residence_type_name( residence.id ) }} {{ get_the_residence_group_name( residence.id ) }} {{ residence.title }}">
+			<a href="{{ residence.link }}">{{- get_the_residence_group_name( residence.id ) }} {{ residence.title -}}</a>
+		</h2>
+		<div class="Tease-residence__text">
+			{{- residence.get_field( 'presentation' ) -}}
+		</div>
 	</div>
 
 	<footer class="Tease-residence__footer">
-		<span class="Tease-residence__code">{{ get_the_residence_code( residence.id ) }}</span>
-		<div class="Tease-residence__location"  itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+		<span class="Badge Badge--lightest Tease-residence__code">{{- get_the_residence_code( residence.id ) -}}</span>
+		<div class="Tease-residence__location" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" title="{{ residence.get_field( 'city' ) }}, {{ get_the_residence_region( residence.id ) }}">
 			<span itemprop="addressLocality">{{ residence.get_field( 'city' ) }}</span>, <span class="addressRegion">{{ get_the_residence_region( residence.id ) }}</span>
 			<meta itemprop="postalCode" content="{{ residence.postal_code }}">
 			<meta itemprop="streetAddress" content="{{ residence.address }}">

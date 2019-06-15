@@ -1,0 +1,8 @@
+/**
+ * Site header
+ *
+ * @uses .Site-header
+ */
+.Site-header {
+	@include padding( top $grid-gutter-width bottom $grid-gutter-width );
+}

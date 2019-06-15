@@ -34,13 +34,16 @@ Header
 
 		<header class="Site-header"role="banner" itemscope itemtype="https://schema.org/WPHeader">
 			<div class="Site-container">
-				<div class="row">
-					<div class="col-6">
+				<div class="row d-flex align-items-center">
+					<div class="col-5">
 						<a class="Logo" href="{{ site.link }}">
 							{% include 'svg/use.html.twig' with { icon: 'logo' } only %}
 						</a>
 					</div>
-					<div class="col-6"></div>
+					<div class="col-6">
+						{% include 'components/menu-main.html.twig' with { items: menu.main.items } %}
+					</div>
+					<div class="col-1"></div>
 				</div>
 			</div>
 		</header>

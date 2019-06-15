@@ -1,0 +1,94 @@
+/**
+ * Button
+ *
+ */
+.Button {
+	@extend .d-inline-block;
+	@extend %text-align-center, %white-space-md-nowrap, %position-relative;;
+	@include padding(
+		top #{ $base-line-height / 2.2 }px
+		right $grid-gutter-width
+		bottom #{ $base-line-height / 2.2 }px
+		left $grid-gutter-width
+	);
+	@extend %text-transform-uppercase;
+
+	font-size: 10px;
+	transition:
+		color .15s map-get( $easings, ease-in-out ),
+		background-color .15s map-get( $easings, ease-in-out ),
+		border-color .15s map-get( $easings, ease-in-out ),
+		box-shadow .15s map-get( $easings, ease-in-out )
+	;
+	border-radius: $grid-gutter-width / 4;
+	max-height: $grid-gutter-width * 2;
+	user-select: none;
+
+	&.is-off {
+		pointer-events: none;
+  		cursor: default;
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&__label {
+		@extend %position-relative;
+
+		z-index: 2;
+	}
+
+	&:not( :disabled ):not( .disabled ) {
+		@extend %Cursor-pointer;
+	}
+
+	&-primary {
+
+		// States
+		&:focus {}
+
+		&:hover {}
+
+		&.is-off {}
+	}
+
+	&-secondary {
+
+		&.is-focus,
+		&:focus {}
+
+		&.is-selected,
+		&:hover {}
+	}
+
+	&-outline-primary {
+
+		&.is-focus,
+		&:focus {}
+
+
+		&.is-selected,
+		&:hover {}
+
+		&.is-off {}
+	}
+
+	&-outline-secondary {
+		border: 1px solid the_color( black );
+		color: the_color( gray, very-dark );
+
+		&.is-focus,
+		&:focus {
+			box-shadow: 0 0 0 $grid-gutter-width / 6 rgba( the_color( black ), 0.5 );
+		}
+
+		&.is-selected,
+		&:hover {
+			background-color: the_color( black );
+			color: the_color( white );
+		}
+
+		&.is-off {}
+	}
+}

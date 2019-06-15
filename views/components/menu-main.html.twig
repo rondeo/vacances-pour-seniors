@@ -1,0 +1,21 @@
+{#
+
+Menu: main
+
+@package VacancesPourSeniors
+@author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+
+#}
+{% if items is iterable %}
+
+	<ul class="Menu-main" itemscope itemtype="http://schema.org/SiteNavigationElement">
+		{% for item in items %}
+			<li class="Menu-main__item" itemprop="name">
+				<a class="Menu-main__link{{ item.classes ? ' ' ~ item.classes | join( ' ' ) }}{{ item.current ? ' is-current' : '' }}" href="{{ item.url }}" itemprop="url"{{ item.target ? ' target="_blank"' }}>
+					{{- item.title -}}
+				</a>
+			</li>
+		{% endfor %}
+	</ul>
+
+{% endif %}

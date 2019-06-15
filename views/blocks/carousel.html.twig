@@ -1,0 +1,45 @@
+{#
+
+Carousel
+
+@param bool horizontal
+@package MaisonRetraiteSelection
+
+#}
+{% if items %}
+    <div id="carousel" class="Carousel page-block" data-node-type="Carousel">
+
+		<ul class="Carousel__items js-carousel">
+			{% for image in items %}
+                <li class="Carousel__item js-item">
+                    <img src="{{ Image( image ).src }}" alt="" width="{{ image.width }}" height="{{ image.height }}">
+                </li>
+            {% endfor %}
+        </ul>
+
+
+        {% if items | length > 1 %}
+            <div class="Carousel__navigation">
+                <ul class="Carousel__navigation__items js-navigation">
+                    {% for image in items %}
+                        <li class="Carousel__navigation__item js-item">
+                            <img src="{{ Image( image ).src }}" alt="" width="{{ image.width }}" height="{{ image.height }}">
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+		{% if items | length > 1 %}
+			<nav class="Carousel__nav">
+				<button class="Carousel__button Carousel__button--left js-previous" type="button">
+					{% include 'svg/use.html.twig' with { icon: 'arrow-left' } only %}
+				</button>
+				<button class="Carousel__button Carousel__button--right js-next" type="button">
+					{% include 'svg/use.html.twig' with { icon: 'arrow-right' } only %}
+				</button>
+			</nav>
+		{% endif %}
+
+    </div>
+{% endif %}

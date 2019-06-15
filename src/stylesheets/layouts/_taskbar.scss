@@ -1,0 +1,19 @@
+/**
+ * Taskbar
+ */
+.Taskbar {
+	@extend .d-flex, .align-items-center;
+
+	position: sticky;
+	top: 0;
+	right: 0;
+	left: 0;
+
+	height: $grid-gutter-width * 3;
+
+	background-color: the_color( white );
+	border-top: 1px solid the_color( gray, light );
+	border-bottom: 1px solid the_color( gray, light );
+
+	z-index: 1;
+}

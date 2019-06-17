@@ -1,0 +1,32 @@
+/**
+ * Front page
+ */
+.Front-page {
+
+	.Site-header {
+		@include absolute( top 0 right 0 left 0 );
+
+		color: the_color( white );
+		z-index: 2;
+	}
+
+	&__hero {
+		@extend %position-relative;
+		@include padding( top $grid-gutter-width * 11 bottom $grid-gutter-width * 5 );
+
+		background-color: the_color( black );
+		color: the_color( white );
+	}
+
+	&__logo {
+		@include size( 447px, $grid-gutter-width * 7 );
+
+		max-width: 100%;
+
+		svg {
+			@extend .d-inline-block;
+			@extend %vertical-align-middle;
+			@include size( 100% );
+		}
+	}
+}

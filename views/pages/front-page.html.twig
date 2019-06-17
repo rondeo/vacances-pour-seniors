@@ -1,0 +1,43 @@
+{#
+
+Pages: front page
+
+@author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+@package VacancesPourSeniors
+
+#}
+{% extends 'index.html.twig' %}
+
+{% block content %}
+
+	{# Hero #}
+	<div class="Front-page__hero">
+		<div class="Site-container Hero__content">
+			<div class="col-12 col-md-5">
+
+				<div class="Front-page__logo">
+					{% include 'svg/use.html.twig' with { icon: 'vacances-pour-seniors' } %}
+				</div>
+
+				<p class="margin-bottom-0 margin-top-3">Pour commencer saisissez votre destination</p>
+			</div>
+		</div>
+
+		<div class="Hero__background">
+			<img src="{{ ( theme.link ~ '/' ~ manifest['img/jpg/map.jpg'] ) | resize( 1440, 638  ) }}" alt="" width="1440" height="638">
+		</div>
+
+	</div>
+
+	{# Taskbar #}
+	<aside class="Taskbar">
+		<div class="Site-container">
+			<div class="row">
+				<div class="col-12">
+					{% include 'components/share.html.twig' %}
+				</div>
+			</div>
+		</div>
+	</aside>
+
+{% endblock %}

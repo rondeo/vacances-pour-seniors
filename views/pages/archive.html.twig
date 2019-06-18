@@ -1,0 +1,28 @@
+{#
+
+Archive
+
+@author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+@package VacancesPourSeniors
+
+#}
+{% extends 'index.html.twig' %}
+
+{% block content %}
+	{% include 'partials/hero.html.twig' with { title: title, text: text } %}
+
+	<div class="Site-container">
+		<ul class="row list-style-type-none margin-y-2" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
+			{% for post in posts %}
+				<li class="col-12 col-sm-6 col-md-3 margin-y-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+					<meta itemprop="position" content="{{ loop.index }}" />
+					{% include "components/tease-#{ posts[0].type }.html.twig" ignore missing with { post: post } only %}
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+
+	<div class="Site-container">
+		{% include 'partials/pagination.html.twig' %}
+	</div>
+{% endblock %}

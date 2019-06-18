@@ -36,11 +36,13 @@ Tease: post
 			<meta itemprop="datePublished" content="{{ post.date | date( 'Y-m-d' ) }}">
 		</h2>
 
-		{% if post.excerpt %}
-			<div class="Tease__text">
+		<div class="Tease__text">
+			{% if post.excerpt %}
 				{{- post.excerpt -}}
-			</div>
-		{% endif %}
+			{% else %}
+				{{ post.content | slice( 0, 100 ) ~ '...'  }}
+			{% endif %}
+		</div>
 
 		<meta itemprop="description" content="{{ post.excerpt }}">
 	</div>

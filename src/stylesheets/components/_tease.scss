@@ -1,0 +1,67 @@
+/**
+ * Tease
+ */
+.Tease {
+	@extend %overflow-hidden;
+	@extend .d-flex, .flex-column;
+
+	border: 1px solid the_color( gray, light );
+	border-radius: $grid-gutter-width / 4;
+	height: 100%;
+
+	&__header {
+		@include size( 100%, $grid-gutter-width * 8 );
+
+		background-color: the_color( black );
+	}
+
+	&__thumbnail {
+		@extend .d-inline-block;
+		@extend %vertical-align-middle;
+
+		@include size( 100% );
+
+		object-fit: cover;
+		object-position: center;
+	}
+
+	&__body {
+		@include padding( top $grid-gutter-width );
+		@include margin( right $grid-gutter-width bottom $grid-gutter-width * 2 left $grid-gutter-width );
+	}
+
+	&__title {
+		@extend %white-space-nowrap, %overflow-hidden;
+		@include margin( top 0 bottom $grid-gutter-width );
+
+		text-overflow: ellipsis;
+	}
+
+	&__text {
+		font-size: $base-font-size-px / power( $scale-factor, 1 );
+
+		p:first-child { @include margin( top 0 ); }
+		p:last-child { @include margin( bottom 0 ); }
+	}
+
+	&__footer {
+		@include padding( bottom $grid-gutter-width );
+		@include margin( top auto right $grid-gutter-width left $grid-gutter-width );
+		@extend .d-flex, .align-items-center;
+
+		font-size: $base-font-size-px / power( $scale-factor, 1 );
+		color: the_color( gray, dark );
+	}
+
+	&__code {
+		@extend .d-flex, .align-items-center, .justify-content-center;
+		@include size( $grid-gutter-width );
+	}
+
+	&__location {
+		@extend %white-space-nowrap, %overflow-hidden;
+		@include margin( left $grid-gutter-width / 2 );
+
+		text-overflow: ellipsis;
+	}
+}

@@ -1,0 +1,20 @@
+/**
+ * Menu
+ *
+ */
+.Menu-footer {
+	@extend %list-style-type-none;
+	@include margin( top auto );
+
+	color: the_color( gray, dark );
+
+	&__items {}
+	&__item {}
+	&__link {
+
+		&.is-current,
+		&:hover {}
+
+		&:focus {}
+	}
+}

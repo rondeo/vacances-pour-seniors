@@ -1,0 +1,40 @@
+{
+    "key": "group_5d02027e67d7c",
+    "title": "Options",
+    "fields": [
+        {
+            "key": "field_5d02029d1272c",
+            "label": "Adresse du site internet",
+            "name": "website",
+            "type": "url",
+            "instructions": "Indiquer l'adresse du site internet du groupe",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "residence_group"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "Les options des groupes",
+    "modified": 1560412887
+}

@@ -1,0 +1,68 @@
+{
+    "key": "group_5cfaa37f4e9e6",
+    "title": "Options",
+    "fields": [
+        {
+            "key": "field_5cfaa38a58d1f",
+            "label": "Ville",
+            "name": "city",
+            "type": "taxonomy",
+            "instructions": "Indiquer la ville attachée à cet article",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "city",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_5cfaa5aa72d66",
+            "label": "Département",
+            "name": "department",
+            "type": "taxonomy",
+            "instructions": "Indiquer le département attaché à l'article",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "department",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 0,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "Options des articles",
+    "modified": 1559930351
+}

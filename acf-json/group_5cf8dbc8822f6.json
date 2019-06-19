@@ -1,0 +1,109 @@
+{
+    "key": "group_5cf8dbc8822f6",
+    "title": "Options",
+    "fields": [
+        {
+            "key": "field_5cf8dbee5a436",
+            "label": "Code postal",
+            "name": "postal_code",
+            "type": "text",
+            "instructions": "Indiquer le code postal de la ville",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": 44000,
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5cf914d06ac1f",
+            "label": "Département",
+            "name": "department",
+            "type": "taxonomy",
+            "instructions": "Indiquer le département dans lequel la ville se trouve",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "department",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_5cf8e06ba8a23",
+            "label": "Région",
+            "name": "region",
+            "type": "taxonomy",
+            "instructions": "Indiquer la région dans laquelle se trouve la ville",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "region",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        },
+        {
+            "key": "field_5cf8de421c102",
+            "label": "Pays",
+            "name": "country",
+            "type": "taxonomy",
+            "instructions": "Indiquer le pays où se trouve la ville",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "taxonomy": "country",
+            "field_type": "select",
+            "allow_null": 0,
+            "add_term": 1,
+            "save_terms": 1,
+            "load_terms": 1,
+            "return_format": "object",
+            "multiple": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "city"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "Options des villes",
+    "modified": 1559856963
+}

@@ -47,6 +47,8 @@ class Residence {
 
 		// add_action( 'quick_edit_custom_box', array( $this, 'add_quick_edit' ), 10, 2 );
 		// add_action( 'save_post_residence', array( $this, 'save_quick_edit' ), 10, 3 );
+
+		add_filter( 'pre_get_posts', array( $this, 'pre_get_residences' ) );
 	}
 
 
@@ -354,5 +356,17 @@ class Residence {
 
 				break;
 		}
+	}
+
+	function pre_get_residences( $query ) {
+		if ( is_admin() ) {
+			return false;
+		}
+
+	    if ( $query->is_search ) {
+	        $query->set( 'post_type', array( 'residence' ) );
+	    }
+
+		return $query;
 	}
 }

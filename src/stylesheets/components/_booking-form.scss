@@ -1,0 +1,47 @@
+/**
+ * Booking form
+ */
+.Booking-form {
+	@include padding( top $grid-gutter-width right $grid-gutter-width bottom $grid-gutter-width left $grid-gutter-width );
+
+	background-color: the_color( white );
+	border-radius: $grid-gutter-width / 4;
+	color: the_color( black );
+	min-height: 100%;
+
+	input {
+		outline: none;
+	}
+
+	&__group {
+		@include margin( bottom $grid-gutter-width );
+
+		&:last-child { @include margin( bottom 0 ); }
+	}
+
+	&__label {
+		@include padding( right $grid-gutter-width / 2 left $grid-gutter-width / 2 );
+
+		font-size: $base-font-size-px / power( $scale-factor, 1 );
+	}
+
+	&__input {
+		@include padding(
+			top #{ $base-line-height / 2.2 }px
+			right $grid-gutter-width / 2
+			bottom #{ $base-line-height / 2.2 }px
+			left $grid-gutter-width / 2
+		);
+		transition: box-shadow .15s map-get( $easings, ease-in-out );
+
+		border-radius: $grid-gutter-width / 4;
+		background-color: the_color( gray, very-light );
+		border: 1px solid the_color( gray, light );
+		font-size: $base-font-size-px / power( $scale-factor, 1 );
+
+		&.is-focus,
+		&:focus {
+			box-shadow: 0 0 0 $grid-gutter-width / 6 rgba( the_color( gray, light ), 0.5 );
+		}
+	}
+}

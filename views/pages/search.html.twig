@@ -1,0 +1,45 @@
+{#
+
+Search
+
+#}
+{% extends 'index.html.twig' %}
+
+{% block content %}
+	{% include 'partials/hero.html.twig' with { title: title } %}
+
+	{% for post in posts if posts %}
+		<div class="Site-container">
+			<ul class="row list-style-type-none margin-y-2" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
+				{% for post in posts %}
+					<li class="col-12 col-sm-6 col-md-3 margin-y-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+						<meta itemprop="position" content="{{ loop.index }}" />
+						{% include "components/tease-#{ posts[0].type | replace( { '_' : '-' } ) }.html.twig" ignore missing with { post: post } only %}
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+
+		{% if posts | length > 12 %}
+			<div class="Site-container">
+				{% include 'partials/pagination.html.twig' with { classes: [ 'margin-top-2', 'margin-bottom-5', 'text-align-right' ] } %}
+			</div>
+		{% endif %}
+
+	{% else %}
+		<div class="Site-container">
+			<div class="row list-style-type-none margin-y-7">
+				<div class="col-12 col-md-6 offset-md-5">
+					{% apply spaceless %}
+					{{ __( 'Aucun résultat à afficher. Retournez à l\'', 'VacancesPourSeniors' ) -}}
+					<a class="font-weight-bold" href="{{ site.url }}">
+						{{- __( 'Accueil', 'VacancesPourSeniors' ) -}}
+					</a>
+					{{ __( 'ou utilisez le formulaire de recherche à nouveau.', 'VacancesPourSeniors' ) }}
+					{% endapply %}
+				</div>
+			</div>
+		</div>
+	{% endfor %}
+
+{% endblock %}

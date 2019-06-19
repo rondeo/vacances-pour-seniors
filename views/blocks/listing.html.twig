@@ -1,0 +1,56 @@
+{#  #}
+<div id="{{ id | default(  ( 'listing-' ~ random( 50, 100 ) ) ) }}" class="Listing page-block" data-node-type="Listing">
+	<div class="Marquee"><span>{{- title }}</span></div>
+
+	<div class="Site-container">
+
+		<ul class="Listing__items row">
+			<li class="col-12 col-md-3">
+				<p class="Listing__subtitle">{{- subtitle -}}</p>
+				<h2 class="Listing__title">{{- title -}}</h2>
+				<div class="Listing__text">{{- text -}}</div>
+			</li>
+
+			<li class="col-12 col-md-9">
+				<ul class="row list-style-type-none js-listing">
+					{% for post in posts %}
+						<li class="Listing__item col-12 col-md-4 js-item">
+							{% include "components/tease-#{ post.type | replace({'_' : '-' }) }.html.twig" with { post: post } %}
+						</li>
+					{% endfor %}
+				</ul>
+			</li>
+		</ul>
+		<footer class="row margin-top-3">
+			<div class="col-12 col-md-3">
+				{% if link %}
+					<a class="Button Button-secondary w-100" href="{{ link.url }}">{{- link.label | default( __( 'Tous les articles', 'VacancesPourSeniors' ) ) -}}</a>
+				{% endif %}
+			</div>
+
+			{% if posts | length > 3 %}
+				<div class="col-md-9 d-flex align-items-center">
+					<ul class="Pagination text-align-left">
+						<li class="Pagination__item">
+							<button class="Pagination__button Pagination__button--previous js-previous" title="{{ __( 'Précédent', 'VacancesPourSeniors' ) }}">
+								{% include 'svg/use.html.twig' with { icon: 'arrow-left' } only %}
+							</button>
+						</li>
+						<li class="Pagination__item">
+							<button class="Pagination__button Pagination__button--next js-next" title="{{ __( 'Suivant', 'VacancesPourSeniors' ) }}">
+								{% include 'svg/use.html.twig' with { icon: 'arrow-right' } only %}
+							</button>
+						</li>
+					</ul>
+					<ul class="Dots margin-x-auto">
+						{% for dot in 1..( ( ( posts | length ) / 3 ) | round( 0, 'ceil' ) ) %}
+							<li class="Dots__item">
+								<button class="Dots__button js-dots{{ loop.first ? ' is-selected' : '' }}" type="button"></button>
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
+		</footer>
+	</div>
+</div>

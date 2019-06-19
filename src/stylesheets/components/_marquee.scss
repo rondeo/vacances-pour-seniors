@@ -1,0 +1,23 @@
+/**
+ * Marquee
+ *
+ * @author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+ */
+.Marquee {
+	@include absolute( top 0 right 0 left 0 );
+	@extend %font-weight-extrabold, %white-space-nowrap;
+
+	font-size: $base-font-size-px * power( $scale-factor, 6 );
+	color: rgba( the_color( red, very-soft ), 0.22 );
+
+	span {
+		$duration: 15;
+		@extend .d-inline-block;
+		animation: marquee #{ $duration }s linear infinite;
+
+		@keyframes marquee {
+			from { transform: translate3d( 100%, 0, 0 ); }
+			to { transform: translate3d( -100%, 0, 0 ); }
+		}
+	}
+}

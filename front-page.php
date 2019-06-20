@@ -16,10 +16,15 @@ if ( ! class_exists( 'Timber' ) ) {
 
 $context = Timber::context();
 
-$context['post']      = Timber::get_post();
+$context['post']       = Timber::get_post();
 $context['pagination'] = Timber::get_pagination();
 $context['node_type']  = 'frontPage';
 $context['body_class'] = 'index';
+
+$context['residences']     = Timber::get_posts( array( 'post_type' => 'residence' ) );
+$context['events']         = Timber::get_posts( array( 'post_type' => 'event' ) );
+$context['special_offers'] = Timber::get_posts( array( 'post_type' => 'special_offers' ) );
+$context['discoveries']    = Timber::get_posts( array( 'post_type' => 'discovery' ) );
 
 $templates = array( 'pages/front-page.html.twig' );
 

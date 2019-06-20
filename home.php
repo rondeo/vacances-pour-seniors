@@ -20,7 +20,9 @@ $context['posts']      = Timber::get_posts();
 $context['pagination'] = Timber::get_pagination();
 $context['node_type']  = 'blog';
 $context['body_class'] = 'index';
+$context['title']      = __( 'Blog' );
+$context['text']       = '<p>' . __( 'Vestibulum viverra nibh dignissim ex iaculis, sit amet bibendum enim varius', 'VacancesPourSeniors' ) . '</p>';
 
-$templates = array( 'pages/blog.html.twig' );
+$templates = array( 'pages/archive.html.twig' );
 
 Timber::render( $templates, $context );

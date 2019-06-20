@@ -3,19 +3,88 @@
  *
  */
 .Menu-main {
-	@extend .d-flex, .justify-content-between;
+	@extend .d-flex, .align-items-md-center, .justify-content-md-between, .flex-column, .flex-md-row;
 	@extend %list-style-type-none, %font-weight-semibold;
 	@include letter-spacing( 20 );
 	@include margin( right $grid-gutter-width * -1 left $grid-gutter-width * -1 );
+	@include padding( top $grid-gutter-width * 4 right $grid-gutter-width left $grid-gutter-width );
+
+	@include fixed( top 0 right 0 bottom 0 left 0 );
+
+	transition: transform .15s map-get( $easings, ease-in-out );
+	transform: translate3d( 100%, 0, 0 );
+	background-color: the_color( white );
+
+	hr {
+		border: none;
+		@include size( 100%, 1px );
+
+		background-color: the_color( black );
+	}
+
+	@at-root .menu--is-open & {
+		transform: translate3d( 0, 0, 0 );
+	}
+
+	z-index: 1;
+
+	@include media-breakpoint-up( md ) {
+		@include padding( top 0 right 0 left 0 );
+
+		position: static;
+		background-color: transparent;
+		transform: translate3d( 0, 0, 0 );
+	}
+
+	&__button {
+		@extend .d-flex, .align-items-center, .justify-content-center;
+		@extend %position-relative;
+		@include size( $grid-gutter-width * 2 );
+
+		border: 1px solid currentColor;
+		border-radius: $grid-gutter-width / 4;
+		z-index: 2;
+		transition: border-color .15s map-get( $easings, ease-in-out );
+
+		@at-root .menu--is-open & {
+			color: the_color( black );
+			svg {
+				fill: the_color( black );
+			}
+		}
+
+		svg {
+			@include size( 100%, $grid-gutter-width / 2 );
+
+			transition: fill .15s map-get( $easings, ease-in-out );
+			fill: currentColor;
+		}
+	}
 
 	&__items {}
-	&__item {}
+	&__item {
+		@include margin(
+			top #{ $base-line-height }px
+			right $grid-gutter-width / 4
+			bottom #{ $base-line-height }px
+			left $grid-gutter-width / 4
+		);
+
+		@include media-breakpoint-up( md ) {
+			@include margin( top 0 bottom 0 );
+
+			&:last-child { @include margin( right 0 ); }
+			&:first-child { @include margin( left 0 ); }
+		}
+	}
 	&__link {
+		@extend %white-space-nowrap;
+		@extend %text-align-center;
 		@include padding(
 			top #{ $base-line-height / 2.2 }px
-			right $grid-gutter-width
+			right $grid-gutter-width / 2
 			bottom #{ $base-line-height / 2.2 }px
-			left $grid-gutter-width
+			left $grid-gutter-width / 2
 		);
 		transition:
 			color .15s map-get( $easings, ease-in-out ),
@@ -24,11 +93,17 @@
 			box-shadow .15s map-get( $easings, ease-in-out )
 		;
 		border-radius: $grid-gutter-width / 4;
-		border: 1px solid rgba( the_color( black ), 0 );
+		border: 1px solid transparent;
+		height: 100%;
+		color: the_color( black );
+
+		@include media-breakpoint-up( md ) {
+			color: the_color( white );
+		}
 
 		&.is-current,
 		&:hover {
-			border: 1px solid the_color( black );
+			border: 1px solid currentColor;
 		}
 
 		&:focus {

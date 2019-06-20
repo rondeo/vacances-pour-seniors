@@ -8,7 +8,8 @@ Menu: main
 #}
 {% if items is iterable %}
 
-	<ul class="Menu-main" itemscope itemtype="http://schema.org/SiteNavigationElement">
+	<ul class="Menu-main js-menu" itemscope itemtype="http://schema.org/SiteNavigationElement">
+		<hr class="d-md-none">
 		{% for item in items %}
 			<li class="Menu-main__item" itemprop="name">
 				<a class="Menu-main__link{{ item.classes ? ' ' ~ item.classes | join( ' ' ) }}{{ item.current ? ' is-current' : '' }}" href="{{ item.url }}" itemprop="url"{{ item.target ? ' target="_blank"' }}>

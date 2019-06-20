@@ -5,4 +5,6 @@
  */
 .Site-header {
 	@include padding( top $grid-gutter-width bottom $grid-gutter-width );
+
+	border-bottom: 1px solid the_color( gray, light );
 }

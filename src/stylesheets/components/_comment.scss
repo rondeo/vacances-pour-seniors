@@ -1,0 +1,39 @@
+/**
+ * Comment
+ */
+.Comment {
+	.Stars {
+		@include margin( left auto bottom 0 );
+		svg {
+			@include size( $grid-gutter-width / 2 );
+			@include margin( right $grid-gutter-width / 10 left $grid-gutter-width / 10 );
+
+			&:first-child { @include margin( left 0 ); }
+			&:last-child { @include margin( right 0 ); }
+		}
+	}
+
+	&__author {
+		@extend %font-weight-bold;
+	}
+
+	&__text {
+		font-size: $base-font-size-px / power( $scale-factor, 1 );
+
+		p:first-child { @include margin( top 0 ); }
+		p:last-child { @include margin( bottom 0 ); }
+	}
+
+	&__date {
+		color: the_color( gray, dark );
+		font-size: $base-font-size-px / power( $scale-factor, 1 );
+	}
+
+	&__rating {
+
+		&__label {
+			@include margin( bottom 0 );
+			color: the_color( gray, very-dark );
+		}
+	}
+}

@@ -1,0 +1,32 @@
+/**
+ * Comforts
+ */
+.Comforts {
+	@extend %position-relative, %padding-top-2, %padding-bottom-3, %padding-x-3, %margin-y-5;
+
+	border-radius: $grid-gutter-width / 4;
+	border: 1px solid the_color( gray, light );
+
+	&__title {
+		@include margin( top 0 );
+	}
+
+	&__items {
+		@extend %list-style-type-none;
+
+		@include media-breakpoint-up( md ) {
+			column-count: 2;
+			column-gap: $grid-gutter-width;
+		}
+	}
+
+	&__item {
+		@extend .d-inline-flex, .align-items-center, .flex-row;
+		@extend %w-100;
+		@include margin( bottom $grid-gutter-width / 2 );
+
+		img {
+			@include margin( right $grid-gutter-width / 2 );
+		}
+	}
+}

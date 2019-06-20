@@ -1,0 +1,113 @@
+/**
+ * Form
+ */
+.Form {
+	@include padding( top $grid-gutter-width right $grid-gutter-width bottom $grid-gutter-width left $grid-gutter-width );
+
+	background-color: the_color( white );
+	border-radius: $grid-gutter-width / 4;
+	border: 1px solid the_color( gray, light );
+	color: the_color( black );
+
+	&--search {
+		min-height: 100%;
+	}
+
+	&__group {
+		@extend %position-relative;
+		@include margin( bottom $grid-gutter-width );
+		@extend .d-flex, .flex-column, .flex-md-row;
+
+		&:last-child { @include margin( bottom 0 ); }
+
+		.ajax-loader {
+			@include absolute( right 0 );
+			width: $grid-gutter-width!important;
+			height: $grid-gutter-width!important;
+			margin: {
+				top: ( $grid-gutter-width / 2 )!important;
+				right: $grid-gutter-width!important;
+				bottom: ( $grid-gutter-width / 2 )!important;
+				left: 0!important;
+			}
+			background-position: center;
+		}
+
+		@include media-breakpoint-up( md ) {
+			&--multi {
+				.Form__label:first-child input {
+					border-top-right-radius: 0;
+					border-bottom-right-radius: 0;
+				}
+				.Form__label:last-child input {
+					border-left: 0;
+					border-top-left-radius: 0;
+					border-bottom-left-radius: 0;
+				}
+			}
+		}
+	}
+
+	&__label {
+		@extend .d-block;
+		@extend %w-100;
+
+		&__title {
+			@extend .d-inline-block;
+			@include padding( right $grid-gutter-width / 2 left $grid-gutter-width / 2 );
+
+			font-size: $base-font-size-px / power( $scale-factor, 1 );
+			line-height: $grid-gutter-width;
+		}
+	}
+
+	&__control-wrap {
+		@extend %position-relative;
+		@extend .d-block;
+	}
+
+	&__control {
+		@include padding(
+			top #{ $base-line-height / 2.2 }px
+			right $grid-gutter-width / 2
+			bottom #{ $base-line-height / 2.2 }px
+			left $grid-gutter-width / 2
+		);
+		transition: box-shadow .15s map-get( $easings, ease-in-out );
+
+		border-radius: $grid-gutter-width / 4;
+		background-color: the_color( gray, very-light );
+		border: 1px solid the_color( gray, light );
+		font-size: $base-font-size-px / power( $scale-factor, 1 );
+		outline: none;
+		box-sizing : border-box;
+
+		&.is-focus,
+		&:focus {
+			box-shadow: 0 0 0 $grid-gutter-width / 6 rgba( the_color( gray, light ), 0.5 );
+		}
+
+		&--textarea {
+			height: $grid-gutter-width * 3;
+			min-height: $grid-gutter-width * 3;
+		}
+	}
+
+	.wpcf7-response-output {
+		border-radius: $grid-gutter-width / 4;
+	}
+
+	.wpcf7-validation-errors {
+		@extend %margin-0, %padding-2;
+		border: none;
+		background-color: the_color( yellow, vivid );
+		color: the_color( white );
+	}
+
+	.wpcf7-not-valid-tip {
+		@include absolute( top 100% right 0 left 0 );
+		@include padding( right $grid-gutter-width / 2 left $grid-gutter-width / 2 );
+
+		color: the_color( red, vivid );
+	}
+}

@@ -24,7 +24,7 @@ Header
 
 		{{ wp_head }}
 
-		{# {% include 'components/gtag.html.twig' with { id: '' } %} #}
+		{% include 'components/gtag.html.twig' with { id: 'UA-11187455-7' } %}
 
 	</head>
 
@@ -35,12 +35,12 @@ Header
 		<header class="Site-header"role="banner" itemscope itemtype="https://schema.org/WPHeader">
 			<div class="Site-container">
 				<div class="row d-flex align-items-center">
-					<div class="col-5">
+					<div class="col-12 col-md-3">
 						<a class="Logo" href="{{ site.link }}">
 							{% include 'svg/use.html.twig' with { icon: 'logo' } only %}
 						</a>
 					</div>
-					<div class="col-6">
+					<div class="d-none d-md-block col-md-8">
 						{% include 'components/menu-main.html.twig' with { items: menu.main.items } %}
 					</div>
 					<div class="col-1"></div>

@@ -1,0 +1,54 @@
+{#
+
+Footer
+
+@author     Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+@file       views/footer.twig
+@package    VacancesPourSeniors
+
+#}
+		<footer class="Site-footer" role="complementary" itemscope itemtype="https://schema.org/WPFooter">
+			<div class="Site-container">
+				<div class="row d-flex align-items-center margin-bottom-5 margin-bottom-md-6">
+					<div class="col-6">
+						<a class="Logo" href="{{ site.link }}">
+							{% include 'svg/use.html.twig' with { icon: 'logo' } only %}
+						</a>
+					</div>
+					<div class="col-6">
+						{% include 'components/socials.html.twig' %}
+					</div>
+				</div>
+				<div class="row margin-bottom-5">
+					<div class="col-12 col-md-3 d-flex flex-column">
+						<h3 class="h4 margin-top-0 margin-bottom-3">{{ __( 'Vacances pour seniors' ) }}</h3>
+						{% include 'components/menu-footer.html.twig' with { items: menu.footer_01.items } %}
+					</div>
+					<div class="col-12 col-md-3 d-flex flex-column">
+						<h3 class="h4 margin-top-3 margin-top-md-0 margin-bottom-3">{{ __( 'Découvrir' ) }}</h3>
+						{% include 'components/menu-footer.html.twig' with { items: menu.footer_02.items } %}
+					</div>
+					<div class="col-12 col-md-4 d-flex flex-column">
+						{% include 'components/menu-footer.html.twig' with { items: menu.footer_03.items } %}
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12"><hr></div>
+				</div>
+				<div class="row margin-top-5">
+					<div class="col-12 col-md-6">
+						<p class="color-gray-dark margin-bottom-0">
+							<a class="color-gray-very-dark" href="{{ site.link }}">VPS</a> par <a class="color-gray-very-dark" href="https://www.maison-retraite-selection.fr/" target="_blank">MDRS</a> © 2019
+						</p>
+					</div>
+					<div class="col-12 col-md-6">
+						<p class="color-gray-dark text-align-md-right margin-bottom-0">Site réalisé par <a class="color-gray-very-dark" href="http://inesa.fr" target="_blank">inesa</a> et <a class="color-gray-very-dark" href="http://inesa.fr" target="_blank">19h47</a></p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		{{ wp_footer }}
+
+	</body>
+</html>

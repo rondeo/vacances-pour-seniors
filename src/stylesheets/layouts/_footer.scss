@@ -1,0 +1,26 @@
+/**
+ * Site footer
+ *
+ * @uses .Site-footer
+ */
+.Site-footer {
+	@include padding( top $grid-gutter-width * 2 bottom $grid-gutter-width * 2 );
+
+	background-color: the_color( gray, very-light );
+	border-top: 1px solid the_color( gray, dark );
+	border-bottom: $grid-gutter-width / 4 solid the_color( red, very-soft );
+
+	@include media-breakpoint-up( md ) {
+		@include padding( top $grid-gutter-width * 3 bottom $grid-gutter-width * 3 );
+	}
+
+	.Logo {
+		@include size( $grid-gutter-width * 3 );
+
+		background-color: the_color( black );
+
+		svg {
+			fill: the_color( white );
+		}
+	}
+}

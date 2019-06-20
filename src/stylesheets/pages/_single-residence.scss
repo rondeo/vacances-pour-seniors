@@ -1,0 +1,46 @@
+/**
+ * Single: residence
+ */
+.Single-residence {
+
+	.Site-header {
+		@include absolute( top 0 right 0 left 0 );
+
+		color: the_color( white );
+		z-index: 2;
+	}
+
+	.Taskbar {
+		@include media-breakpoint-up( md ) {
+			position: sticky;
+			top: 0;
+			right: 0;
+			left: 0;
+		}
+	}
+
+	.wpcf7 {
+		position: sticky;
+		top: $grid-gutter-width * 4;
+	}
+
+	&__anchor {
+		@include absolute( top $grid-gutter-width * -4 left 0 );
+	}
+
+	&__hero {
+		@extend %position-relative;
+		@include padding( top $grid-gutter-width * 5.5 bottom $grid-gutter-width * 2.5 );
+
+		background-color: the_color( black );
+		color: the_color( white );
+
+		@include media-breakpoint-up( md ) {
+			@include padding( top $grid-gutter-width * 11 bottom $grid-gutter-width * 5 );
+		}
+	}
+
+	&__address {
+		font-size: $base-font-size-px / power( $scale-factor, 1 );
+	}
+}

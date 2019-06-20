@@ -1,0 +1,306 @@
+{#
+
+Single: Residence
+
+@author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+@package VacancesPourSeniors
+
+#}
+{% extends 'index.html.twig' %}
+
+{% block content %}
+
+	{# Hero #}
+	<div class="Single-residence__hero">
+		<div class="Site-container Hero__content">
+			<div class="row d-flex align-items-center">
+				<div class="col-12 col-md-5">
+
+					{% if ( residence.get_field( 'note' ).general | length > 0 ) %}
+						{% include 'partials/stars.html.twig' with { stars: ( residence.get_field( 'note' ).general / 2 ) } %}
+					{% endif %}
+
+					<h1 class="h2 margin-0">{{- ( get_the_residence_group_name() ~ '<br>' ) | default( '' ) | raw -}}{{- residence.title -}}</h1>
+
+					<div class="Hero__text color-white">
+						{% if residence.get_field( 'presentation' ) %}
+								{{- residence.get_field( 'presentation' ) -}}
+						{% else %}
+							{{- residence.get_field( 'opinion' ) | striptags | truncate( 20, '&hellip;' ) -}}
+						{% endif %}
+					</div>
+				</div>
+
+				{# <div class="col-12 col-md-4 offset-md-3">{{- function( 'do_shortcode', '[contact-form-7 id="1672" title="Sans titre"]' ) -}}</div> #}
+
+			</div>
+
+		</div>
+
+		{% if get_the_residence_thumbnail() %}
+			<div class="Hero__background">
+				<img src="{{ Image( get_the_residence_thumbnail() ).src }}" alt="{{ Image( get_the_residence_thumbnail() ).alt }}" width="{{ Image( get_the_residence_thumbnail() ).width }}" height="{{ Image( get_the_residence_thumbnail() ).height }}">
+			</div>
+		{% endif %}
+
+	</div>
+
+
+	<div>
+		<aside class="Taskbar">
+			<div class="Site-container">
+				<div class="row">
+					<div class="d-none d-md-block col-md-8">
+						<ul class="Taskbar__list">
+						{% apply spaceless %}
+							{% if residence.get_field( 'opinion' ) %}
+								<li><a href="#opinion" class="Button Button-outline-light">{{- __( 'Avis VPS', 'VacancesPourSeniors' ) -}}</a></li>
+							{% endif %}
+
+							{% if get_the_residence_comforts() is iterable %}
+								<li><a href="#comforts" class="Button Button-outline-light">{{- __( 'Espace confort', 'VacancesPourSeniors' ) -}}</a></li>
+							{% endif %}
+
+							{% if get_the_residence_accommodations() is iterable %}
+								<li><a href="#accommodations" class="Button Button-outline-light">{{- __( 'Hébergement', 'VacancesPourSeniors' ) -}}</a></li>
+							{% endif %}
+
+							{% if get_the_residence_social_lives() is iterable %}
+								<li><a href="#social-lives" class="Button Button-outline-light">{{- __( 'Vie sociale', 'VacancesPourSeniors' ) -}}</a></li>
+							{% endif %}
+						{% endapply %}
+						</ul>
+					</div>
+					<div class="col-12 col-md-4">
+						{% include 'components/shares.html.twig' %}
+					</div>
+				</div>
+			</div>
+		</aside>
+
+		<div class="Site-container padding-top-3 padding-top-md-5">
+			<div class="row">
+				<div class="col-12 col-md-4">
+
+					<div role="form" class="wpcf7" id="{{ unit_tag }}" lang="{{ function( 'get_locale' ) }}" dir="ltr">
+						<div class="screen-reader-response"></div>
+						<form action="{{ booking_form_url }}" method="post" class="Form wpcf7-form" novalidate="novalidate">
+
+							<div class="d-none">
+								<input type="hidden" name="_wpcf7" value="{{ constant( 'BOOKING_FORM_ID' ) }}" />
+								<input type="hidden" name="_wpcf7_version" value="{{ constant( 'WPCF7_VERSION' ) }}" />
+								<input type="hidden" name="_wpcf7_locale" value="{{ function( 'get_locale' ) }}" />
+								<input type="hidden" name="_wpcf7_unit_tag" value="{{ unit_tag }}" />
+								<input type="hidden" name="_wpcf7_container_post" value="0" />
+							</div>
+
+							<div class="margin-bottom-3 flex-column">
+								<h2 class="h4 margin-x-2 margin-top-0">{{- __( 'Prenez contact en toute sérénité', 'VacancesPourSeniors' ) -}}</h2>
+								<p class="Single-residence__address margin-x-2 margin-y-0">
+									{{- get_the_residence_group_name() }}{{ residence.title }}, {{ residence.get_field( 'contact' ).address }}, {{ residence.get_field( 'contact' ).postal_code }} {{ get_the_city_name() -}}
+								</p>
+							</div>
+
+							<div class="Form__group Form__group--multi">
+								<label class="Form__label">
+									<span class="Form__label__title">{{- __( 'Nom', 'VacancesPourSeniors' ) -}} *</span>
+									<span class="Form__control-wrap wpcf7-form-control-wrap your-name">
+										<input id="your-name" class="Form__control w-100 wpcf7-form-control wpcf7-text wpcf7-validates-as-required" name="your-name" type="text" value="" placeholder="{{ __( 'Nom', 'VacancesPourSeniors' ) }}" aria-required="true" aria-invalid="false">
+									</span>
+								</label>
+								<label class="Form__label">
+									<span class="Form__label__title">{{- __( 'Prénom', 'VacancesPourSeniors' ) -}} *</span>
+									<span class="Form__control-wrap wpcf7-form-control-wrap your-firstname">
+										<input id="your-firstname" class="Form__control w-100 wpcf7-form-control wpcf7-text wpcf7-validates-as-required" name="your-firstname" type="text" value="" placeholder="{{ __( 'Prénom', 'VacancesPourSeniors' ) }}">
+									</span>
+								</label>
+							</div>
+
+							<div class="Form__group">
+								<label class="Form__label">
+									<span class="Form__label__title">{{- __( 'Adresse email', 'VacancesPourSeniors' ) -}} *</span>
+									<span class="Form__control-wrap wpcf7-form-control-wrap your-email">
+										<input type="email" name="your-email" value="" size="40" class="Form__control w-100 wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email" aria-required="true" aria-invalid="false" placeholder="Email"/>
+									</span>
+								</label>
+							</div>
+
+							<div class="Form__group Form__group--multi">
+								<label class="Form__label">
+									<span class="Form__label__title">{{- __( 'Arrivée', 'VacancesPourSeniors' ) -}}</span>
+									<span class="Form__control-wrap wpcf7-form-control-wrap your-arrival-date">
+										<input type="date" name="your-arrival-date" value="" class="Form__control w-100 wpcf7-form-control wpcf7-date wpcf7-validates-as-date" aria-invalid="false">
+									</span>
+								</label>
+								<label class="Form__label">
+									<span class="Form__label__title">{{- __( 'Départ', 'VacancesPourSeniors' ) -}}</span>
+									<span class="Form__control-wrap wpcf7-form-control-wrap your-departure-date">
+										<input type="date" name="your-departure-date" value="" class="Form__control w-100 wpcf7-form-control wpcf7-date wpcf7-validates-as-date" aria-invalid="false" />
+									</span>
+								</label>
+							</div>
+
+							<div class="Form__group">
+								<label class="Form__label">
+									<span class="Form__label__title">{{- __( 'Message', 'VacancesPourSeniors' ) -}} *</span>
+									<span class="Form__control-wrap wpcf7-form-control-wrap your-message">
+										<textarea id="your-message" name="your-message" class="Form__control Form__control--textarea w-100 wpcf7-form-control wpcf7-textarea wpcf7-validates-as-required" aria-invalid="false" placeholder="{{ __( 'Message', 'VacancesPourSeniors' ) }}"></textarea>
+									</span>
+								</label>
+							</div>
+
+							<div class="Form__group">
+								<input type="submit" value="{{ __( 'Réserver' ) }}" class="Button Button-primary w-100 wpcf7-form-control wpcf7-submit" />
+							</div>
+
+							<div class="wpcf7-response-output wpcf7-display-none"></div>
+
+						</form>
+					</div>
+				</div>
+				<div class="col-12 col-md-7 offset-md-1">
+
+					{% include 'blocks/carousel.html.twig' with { items: residence.get_field( 'gallery' ) } %}
+
+					{% if residence.get_field( 'opinion' ) %}
+						<div class="Opinion">
+							 <span class="Single-residence__anchor" id="opinion"></span>
+							<h2 class="Opinion__title h3 color-red-very-soft margin-bottom-2">{{ __( 'L\'avis VPS', 'VacancesPourSeniors' ) }}</h2>
+
+							{{- get_extended( residence.get_field( 'opinion' ) ).main -}}
+
+							{% if get_extended( residence.get_field( 'opinion' ) ).extended %}
+								<details>
+									<summary class="Opinion__button Button Button-outline-light">
+										{{- __( 'Découvrir la suite', 'VacancesPourSeniors' ) -}}
+									</summary>
+									<div class="Opinion__content">
+										{{- get_extended( residence.get_field( 'opinion' ) ).extended -}}
+									</div>
+								</details>
+							{% endif %}
+						</div>
+					{% endif %}
+
+					{% if get_the_residence_comforts() is iterable %}
+						<div class="Comforts">
+							<span class="Single-residence__anchor" id="comforts"></span>
+							<h2 class="Comforts__title h3 color-red-very-soft margin-bottom-2">
+								{{- __( 'Espace de confort', 'VacancesPourSeniors' ) -}}
+							</h2>
+
+							<ul class="Comforts__items">
+								{% apply spaceless %}
+									{% for comfort in get_the_residence_comforts() %}
+										<li class="Comforts__item">
+											{%- if comfort.get_field( 'pictogram' ) %}
+												<img src="{{ Image( comfort.get_field( 'pictogram' ) ).src | resize( 44 ) }}" alt="" width="44" height="44">
+											{% endif -%}
+											{{- comfort.name -}}
+										</li>
+									{% endfor %}
+								{% endapply %}
+							</ul>
+						</div>
+					{% endif %}
+
+					{% if get_the_residence_accommodations() is iterable %}
+						<div class="Accommodations">
+							<span class="Single-residence__anchor" id="accommodations"></span>
+							<h2 class="Accomodations__title h3 color-red-very-soft margin-bottom-2">
+								{{- __( 'Hébergement', 'VacancesPourSeniors' ) -}}
+							</h2>
+							<ul class="Accommodations__items">
+							{% for accommodation in get_the_residence_accommodations() %}
+								<li>{{- accommodation.name -}}</li>
+							{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+
+					{% if get_the_residence_social_lives() is iterable %}
+						<div class="Social-lives">
+							<span class="Single-residence__anchor" id="social-lives"></span>
+							<h2 class="Social-lives__title h3 color-red-very-soft margin-bottom-2">
+								{{- __( 'Vie sociale', 'VacancesPourSeniors' ) -}}
+							</h2>
+							<ul class="Social-lives__items">
+							{% for social_life in get_the_residence_social_lives() %}
+								<li>{{- social_life.name -}}</li>
+							{% endfor %}
+							</ul>
+						</div>
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="Site-container">
+		<div class="row">
+			<div class="col-12 col-sm-6 col-md-5">
+				<div class="Note">
+					<h2 class="Note__title h3 color-red-very-soft margin-bottom-2">{{- __( 'Note globale', 'VacancesPourSeniors' ) -}}</h2>
+
+					<ul class="Note__items">
+						{% apply spaceless %}
+							{% for rating in ratings %}
+								<li class="d-flex align-items-center">
+									<p class="Comment__rating__label">{{- rating.label -}}</p>
+									{% include 'partials/stars.html.twig' with { stars: random( 0, 5 ) } %}
+								</li>
+							{% endfor %}
+						{% endapply %}
+					</ul>
+				</div>
+			</div>
+			<div class="col-12 col-sm-6">
+				<div class="Comments">
+					<h2 class="Comments__title h3 color-red-very-soft margin-bottom-2">
+						{% include 'partials/pluralise.twig' with {
+							integer: residence.comments | length,
+							plural: residence.comments | length ~ ' ' ~ __( 'avis clients', 'VacancesPourSeniors' ),
+							singular: __( 'Aucun avis', 'VacancesPourSeniors' )
+						} %}
+					</h2>
+
+					{# {{ function( 'comments_template' ) }} #}
+					{% if residence.comments is iterable %}
+						<ul class="Comments__items">
+							{% for comment in residence.comments %}
+								<li>{% include 'partials/comment.html.twig' with { comment: comment } %}</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+
+					<details>
+						<summary class="Comments__button Button Button-primary d-block d-md-inline-block">
+							{{- __( 'Ajouter un avis', 'VacancesPourSeniors' ) -}}
+						</summary>
+						<div class="Opinion__content">
+							{% include 'partials/comment-form.html.twig' %}
+						</div>
+					</details>
+
+					{% if residence.comments | length > 2 %}
+						<button class="Button Button-outline-light" type="button">
+							{{- __( 'Plus d\'avis', 'VacancesPourSeniors' ) -}}
+						</button>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	{% if events is iterable and events is not empty %}
+		{% include 'blocks/listing.html.twig' with { posts: events, title: __( 'Les évènements liés aux villes', 'VacancesPourSeniors' ) } %}
+	{% endif %}
+
+	{% if discoveries is iterable and discoveries is not empty %}
+		{% include 'blocks/listing.html.twig' with { posts: discoveries, title: __( 'Terroirs et découvertes', 'VacancesPourSeniors' ) } %}
+	{% endif %}
+
+{% endblock %}

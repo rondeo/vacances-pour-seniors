@@ -16,10 +16,15 @@ if ( ! class_exists( 'Timber' ) ) {
 
 $context = Timber::context();
 
-$context['posts'] = Timber::get_posts();
-$context['pagination'] = Timber::get_pagination();
+$context['posts']       = Timber::get_posts();
+$context['pagination']  = Timber::get_pagination();
+
+$context['found_posts'] = $wp_query->found_posts;
+$context['action']      = 'ajax_load_special_offers';
+
 $context['title'] = __( 'Les évènements', 'VacancesPourSeniors' );
 $context['text']  = '<p>' . __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed quam mi, hendrerit', 'VacancesPourSeniors' ) . '</p>';
+
 
 $templates = array( 'pages/archive.html.twig' );
 

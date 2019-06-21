@@ -8,6 +8,8 @@
  * @package VacancesPourSeniors
  */
 
+define( 'BOOKING_FORM_ID', 1669 );
+
 /**
  * Autoload
  */
@@ -120,6 +122,7 @@ class VacancesPourSeniors extends Timber {
 		include_once get_template_directory() . '/inc/post-types/class-residence.php';
 		include_once get_template_directory() . '/inc/post-types/class-specialoffers.php';
 		include_once get_template_directory() . '/inc/post-types/class-event.php';
+		include_once get_template_directory() . '/inc/post-types/class-discovery.php';
 
 		include_once get_template_directory() . '/inc/taxonomies/class-residencetype.php';
 		include_once get_template_directory() . '/inc/taxonomies/class-residencegroup.php';
@@ -136,6 +139,7 @@ class VacancesPourSeniors extends Timber {
 		new Residence( $this->get_theme_version() );
 		new SpecialOffers( $this->get_theme_version() );
 		new Event( $this->get_theme_version() );
+		new Discovery( $this->get_theme_version() );
 
 		new ResidenceType( $this->get_theme_version() );
 		new ResidenceGroup( $this->get_theme_version() );
@@ -322,6 +326,17 @@ class VacancesPourSeniors extends Timber {
 			);
 		}
 
+		if ( function_exists( 'get_the_department_code' ) ) {
+			$twig->addFunction(
+				new Twig\TwigFunction(
+					'get_the_department_code',
+					function ( $department_term_id = null ) {
+						return get_the_department_code( $department_term_id );
+					}
+				)
+			);
+		}
+
 		if ( function_exists( 'get_the_modified_date' ) ) {
 			$twig->addFunction(
 				new Twig\TwigFunction(
@@ -355,12 +370,23 @@ class VacancesPourSeniors extends Timber {
 			);
 		}
 
-		if ( function_exists( 'get_the_region' ) ) {
+		if ( function_exists( 'get_the_region_name' ) ) {
 			$twig->addFunction(
 				new Twig\TwigFunction(
-					'get_the_region',
+					'get_the_region_name',
 					function ( $post_id = null ) {
-						return get_the_region( $post_id );
+						return get_the_region_name( $post_id );
+					}
+				)
+			);
+		}
+
+		if ( function_exists( 'get_average_ratings_residence' ) ) {
+			$twig->addFunction(
+				new Twig_SimpleFunction(
+					'get_average_ratings_residence',
+					function( $residence_id = null ) {
+						return get_average_ratings_residence( $residence_id );
 					}
 				)
 			);
@@ -400,7 +426,7 @@ class VacancesPourSeniors extends Timber {
 		$context['current_url'] = home_url( add_query_arg( array(), $wp->request ) );
 		$context['manifest']    = $this->theme_manifest;
 
-// Share and Socials links
+		// Share and Socials links.
 		$socials = array(
 			array(
 				'title'     => 'LinkedIn',
@@ -501,7 +527,7 @@ class VacancesPourSeniors extends Timber {
 	 */
 	public function webfonts() {
 		return array(
-			'Montserrat' => 'https://fonts.googleapis.com/css?family=Montserrat:300,600,700&display=swap'
+			'Montserrat' => 'https://fonts.googleapis.com/css?family=Montserrat:300,500,600,700,800&display=swap'
 		);
 	}
 
@@ -572,6 +598,7 @@ class VacancesPourSeniors extends Timber {
 		wp_register_script(
 			$this->theme_name . '-main',
 			get_template_directory_uri() . '/' . get_theme_manifest()['main.js'],
+			// array( 'wp-util' ),
 			array(),
 			$this->get_theme_version(),
 			true
@@ -587,6 +614,19 @@ class VacancesPourSeniors extends Timber {
 		wp_add_inline_script(
 			'feature',
 			'document.documentElement.className=document.documentElement.className.replace("no-js","js"),feature.touch&&!navigator.userAgent.match(/Trident\/(6|7)\./)&&(document.documentElement.className=document.documentElement.className.replace("no-touch","touch"));'
+		);
+
+		wp_localize_script(
+			$this->theme_name . '-main',
+			'wp',
+			array(
+				'template_directory_uri' => get_template_directory_uri(),
+				'base_url'               => site_url(),
+				'home_url'               => home_url( '/' ),
+				'ajax_url'               => admin_url( 'admin-ajax.php' ),
+				'current_url'            => get_permalink(),
+				'nonce'                  => wp_create_nonce( 'security' ),
+			)
 		);
 
 		wp_enqueue_script( $this->theme_name . '-main' );

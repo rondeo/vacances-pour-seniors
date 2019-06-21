@@ -45,10 +45,13 @@ class Residence {
 		add_filter( 'manage_residence_posts_columns', array( $this, 'add_custom_columns' ) );
 		add_action( 'manage_residence_posts_custom_column', array( $this, 'render_custom_columns' ), 10, 2 );
 
+		add_action( 'wp_ajax_nopriv_ajax_load_residences', array( $this, 'ajax_load_residences' ) );
+		add_action( 'wp_ajax_ajax_load_residences', array( $this, 'ajax_load_residences' ) );
+
 		// add_action( 'quick_edit_custom_box', array( $this, 'add_quick_edit' ), 10, 2 );
 		// add_action( 'save_post_residence', array( $this, 'save_quick_edit' ), 10, 3 );
 
-		add_filter( 'pre_get_posts', array( $this, 'pre_get_residences' ) );
+		// add_filter( 'pre_get_posts', array( $this, 'pre_get_residences' ) );
 	}
 
 
@@ -363,10 +366,35 @@ class Residence {
 			return false;
 		}
 
+		if ( ! $query->is_main_query() ) {
+			return false;
+		}
+
 	    if ( $query->is_search ) {
 	        $query->set( 'post_type', array( 'residence' ) );
 	    }
-
 		return $query;
+	}
+
+	/**
+	 * Load posts with AJAX request.
+	 */
+	public function ajax_load_residences() {
+		$offset = isset( $_GET['offset'] ) ? $_GET['offset'] : 0;
+		$posts_per_page = isset( $_GET['posts_per_page'] ) ? $_GET['posts_per_page'] : 3;
+
+		$args = array(
+			'post_type'      => 'residence',
+			'posts_per_page' => $posts_per_page,
+			'offset'         => $offset,
+			'post_status'    => 'publish',
+		);
+
+		$context = Timber::get_context();
+		$context['posts'] = Timber::get_posts( $args );
+
+		Timber::render( 'partials/archive-listing.html.twig', $context );
+
+		wp_die();
 	}
 }

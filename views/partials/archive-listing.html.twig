@@ -1,0 +1,13 @@
+{#
+
+Archive listing
+
+Usefull for AJAX loading
+
+#}
+{% for post in posts %}
+	<li class="col-12 col-sm-6 col-md-3 margin-y-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
+		<meta itemprop="position" content="{{ loop.index }}" />
+		{% include "components/tease-#{ posts[0].type | replace( { '_' : '-' } ) }.html.twig" ignore missing with { post: post } only %}
+	</li>
+{% endfor %}

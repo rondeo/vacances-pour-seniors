@@ -11,18 +11,45 @@ Archive
 {% block content %}
 	{% include 'partials/hero.html.twig' with { title: title, text: text } %}
 
-	<div class="Site-container">
-		<ul class="row list-style-type-none margin-y-2" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
-			{% for post in posts %}
-				<li class="col-12 col-sm-6 col-md-3 margin-y-2" itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem">
-					<meta itemprop="position" content="{{ loop.index }}" />
-					{% include "components/tease-#{ posts[0].type }.html.twig" ignore missing with { post: post } only %}
-				</li>
-			{% endfor %}
-		</ul>
-	</div>
+	{% if posts is iterable and posts is not empty %}
+		<div
+			{{- found_posts > 12 ? " class=\"page-block\"" | raw : '' -}}
+			{{- found_posts > 12 ? " id=\"load-more-#{posts[0].post_type}\"" | raw : '' -}}
+			{{- found_posts > 12 ? " data-node-type=\"LoadMore\"" | raw : '' -}}
+		>
+			<div class="Site-container">
+				<ul
+					class="Archive__container row list-style-type-none margin-y-2{{ found_posts > 12 ? ' js-container': '' }}"
+					itemprop="itemList"
+					itemscope=""
+					itemtype="http://schema.org/ItemList"
+					{{- found_posts > 12 ? " data-posts-per-page=\"#{ posts_per_page | default( 12 ) }\"" | raw : '' -}}
+					{{- found_posts > 12 ? " data-found-posts=\"#{ found_posts }\"" | raw : '' -}}
+					{{- found_posts > 12 ? " data-action=\"#{ action }\"" | raw : '' -}}
+				>
+					{% include 'partials/archive-listing.html.twig' with { posts: posts } %}
+				</ul>
+			</div>
 
-	<div class="Site-container">
-		{% include 'partials/pagination.html.twig' %}
-	</div>
+			{% if found_posts > 12 %}
+				<div class="Site-container margin-top-4 margin-bottom-5">
+					<div class="row">
+						<div class="col-12 text-align-center">
+							<button type="button" class="Button Button-outline-light Archive__load-more js-button" data-count="{{ found_posts - ( posts | length ) }}">
+								{{- __( 'Plus d\'article' ) -}}
+							</button>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		</div>
+	{% else %}
+		<div class="Site-container">
+			<div class="row list-style-type-none margin-y-7">
+				<div class="col-12 col-md-6 offset-md-5">
+					{{- __( 'Aucun article à afficher pour le moment' ) -}}
+				</div>
+			</div>
+		</div>
+	{% endif %}
 {% endblock %}

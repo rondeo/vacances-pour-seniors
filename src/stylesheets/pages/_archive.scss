@@ -1,0 +1,35 @@
+/**
+ * Archive
+ */
+.Archive {
+
+	&__container {
+		transition: opacity .15s map-get( $easings, ease-in-out );
+
+		&.is-loading {
+			opacity: 0.3;
+		}
+	}
+
+	&__load-more {
+		color: the_color( gray, very-dark );
+		background-color: the_color( white );
+
+		&:hover {
+			&::after {
+				color: the_color( white );
+			}
+		}
+
+		&::after {
+			@extend .d-inline-block;
+			@extend %vertical-align-super;
+			@include margin( left $grid-gutter-width / 4 );
+
+			color: the_color( gray, light );
+			content: attr(data-count);
+			font-size: $base-font-size-px / power( $scale-factor, 1 );
+			transition: color .15s map-get( $easings, ease-in-out );
+		}
+	}
+}

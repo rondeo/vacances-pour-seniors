@@ -1,0 +1,76 @@
+{#
+
+Single
+
+#}
+{% extends 'index.html.twig' %}
+
+{% block content %}
+
+	{# Hero #}
+	<div class="Single__hero">
+		<div class="Site-container Hero__content">
+			<div class="col-12 col-md-4">
+
+				<h1 class="h2 margin-0">{{- post.title -}}</h1>
+
+				<div class="Single__text">
+					{% if post.excerpt %}
+						{{- post.excerpt -}}
+					{% else %}
+						{{- ( post.content | striptags ) | slice( 0, 100 ) ~ '...' -}}
+					{% endif %}
+				</div>
+
+			</div>
+		</div>
+		{% if post.thumbnail %}
+			<div class="Hero__background">
+				<img src="{{ Image( post.thumbnail ).src }}" alt="{{ Image( post.thumbnail ).alt }}" width="{{ Image( post.thumbnail ).width }}" height="{{ Image( post.thumbnail ).height }}">
+			</div>
+		{% endif %}
+	</div>
+
+	<aside class="Taskbar">
+		<div class="Site-container">
+			<div class="row d-flex align-items-center">
+
+				{% if post.get_field( 'information' ) %}
+					<div class="d-none d-md-block col-md-8">
+						<div class="Single__information" title="{{ post.get_field( 'information' ) }}">{{- post.get_field( 'information' ) -}}</div>
+					</div>
+				{% elseif related_post %}
+					<div class="d-none d-md-block col-md-8">
+						<div class="Single__information" title="{{ post.get_field( 'information' ) }}">
+							{{- get_the_residence_group_name( related_post.id ) }} {{ related_post.title -}}, {{ related_post.postal_code }} {{ get_the_city_name( related_post.id ) }}, {{ get_the_region_name( related_post.id ) -}}
+						</div>
+					</div>
+				{% endif %}
+
+				<div class="col-12 col-md-4{{ post.get_field( 'information' ) or related_post ? '' : ' offset-md-8' }}">
+					{% include 'components/shares.html.twig' %}
+				</div>
+			</div>
+		</div>
+	</aside>
+
+	<div class="Site-container">
+		<div class="row margin-y-5 margin-y-md-7">
+			{% if related_post %}
+				<div class="col-12 col-md-3 offset-md-1 align-self-start">
+					{% include "components/tease-#{related_post.type}.html.twig" with { post: related_post } %}
+				</div>
+			{% endif %}
+
+			<div class="col-12 col-md-6{{ related_post ? ' offset-md-1' : ' offset-md-5' }}">
+				{{- post.content -}}
+			</div>
+
+		</div>
+	</div>
+
+	{% if related_posts is iterable and related_posts is not empty %}
+		{% include 'blocks/listing.html.twig' with { title: title | default( __( 'Les résidences liées' ) ), posts: related_posts } %}
+	{% endif %}
+
+{% endblock %}

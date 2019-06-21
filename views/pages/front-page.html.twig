@@ -13,13 +13,19 @@ Pages: front page
 	{# Hero #}
 	<div class="Front-page__hero">
 		<div class="Site-container Hero__content">
-			<div class="col-12 col-md-5">
+			<div class="row d-flex align-items-center">
+				<div class="col-12 col-md-5">
 
-				<div class="Front-page__logo">
-					{% include 'svg/use.html.twig' with { icon: 'vacances-pour-seniors' } %}
+					<div class="Front-page__logo">
+						{% include 'svg/use.html.twig' with { icon: 'vacances-pour-seniors' } %}
+					</div>
+
+					<p class="margin-bottom-md-0 margin-top-md-3">{{- __( 'Pour commencer saisissez votre destination' ) -}}</p>
 				</div>
 
-				<p class="margin-bottom-0 margin-top-3">Pour commencer saisissez votre destination</p>
+				<div class="col-12 col-md-3 offset-md-4">
+					{% include 'components/search-form.html.twig' %}
+				</div>
 			</div>
 		</div>
 
@@ -34,10 +40,62 @@ Pages: front page
 		<div class="Site-container">
 			<div class="row">
 				<div class="col-12">
-					{% include 'components/share.html.twig' %}
+					{% include 'components/shares.html.twig' %}
 				</div>
 			</div>
 		</div>
 	</aside>
+
+	{% include 'blocks/listing.html.twig' with {
+		posts: residences,
+		subtitle: __( 'Résidences', 'VacancesPourSeniors' ),
+		title: __( 'Les résidences', 'VacancesPourSeniors' ),
+		text: '<p>' ~ __( 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.', 'VacancesPourSeniors' ) ~ '</p>',
+		link: {
+			label: 'Toutes les résidences',
+			url: function( 'get_post_type_archive_link', 'residence' )
+		}
+	} only %}
+
+	{% include 'blocks/listing.html.twig' with {
+		posts: events,
+		subtitle: __( 'Évènements', 'VacancesPourSeniors' ),
+		title: __( 'Les évènements liés aux villes', 'VacancesPourSeniors' ),
+		text: '<p>' ~ __( 'Des évènements inoubliables à découvrir près de votre résidence vacances.', 'VacancesPourSeniors' ) ~ '</p>',
+		link: {
+			label: 'Tous les évènements',
+			url: function( 'get_post_type_archive_link', 'event' )
+		}
+	} only %}
+
+	{% include 'blocks/listing.html.twig' with {
+		posts: special_offers,
+		subtitle: __( 'Offres spéciales', 'VacancesPourSeniors' ),
+		title: __( 'Les offres spéciales des établissements', 'VacancesPourSeniors' ),
+		text: '<p>' ~ __( 'Des offres spéciales sur mesure créées pour vous par nos partenaires partout en France.', 'VacancesPourSeniors' ) ~ '</p>',
+		link: {
+			label: 'Toutes les offres spéciales',
+			url: function( 'get_post_type_archive_link', 'special_offers' )
+		}
+	} only %}
+
+	{% include 'blocks/listing.html.twig' with {
+		posts: discoveries,
+		subtitle: __( 'Terroirs et découvertes', 'VacancesPourSeniors' ),
+		title: __( 'Terroirs et découvertes', 'VacancesPourSeniors' ),
+		text: '<p>' ~ __( 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.', 'VacancesPourSeniors' ) ~ '</p>',
+		link: {
+			url: function( 'get_post_type_archive_link', 'discovery' )
+		}
+
+	} only %}
+
+	<div class="Site-container">
+		<div class="row d-flex justify-content-center margin-y-7">
+			<div class="col-12 col-md-3"><p class="h3 text-align-center color-gray-very-dark">300 résidences référencées sur VPS</p></div>
+			<div class="col-12 col-md-3"><p class="h3 text-align-center color-gray-very-dark">Les meilleurs offres toutes l'année</p></div>
+			<div class="col-12 col-md-3"><p class="h3 text-align-center color-gray-very-dark">Garantie de la marque VPS</p></div>
+		</div>
+	</div>
 
 {% endblock %}

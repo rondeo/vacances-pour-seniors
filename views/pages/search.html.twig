@@ -8,7 +8,7 @@ Search
 {% block content %}
 	{% include 'partials/hero.html.twig' with { title: title } %}
 
-	{% for post in posts if posts %}
+	{% if posts is iterable and posts is not empty %}
 		<div class="Site-container">
 			<ul class="row list-style-type-none margin-y-2" itemprop="itemList" itemscope="" itemtype="http://schema.org/ItemList">
 				{% for post in posts %}
@@ -19,12 +19,6 @@ Search
 				{% endfor %}
 			</ul>
 		</div>
-
-		{% if posts | length > 12 %}
-			<div class="Site-container">
-				{% include 'partials/pagination.html.twig' with { classes: [ 'margin-top-2', 'margin-bottom-5', 'text-align-right' ] } %}
-			</div>
-		{% endif %}
 
 	{% else %}
 		<div class="Site-container">
@@ -40,6 +34,6 @@ Search
 				</div>
 			</div>
 		</div>
-	{% endfor %}
+	{% endif %}
 
 {% endblock %}

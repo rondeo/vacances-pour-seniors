@@ -1,0 +1,38 @@
+{#
+
+Pagination
+
+@package VacancesPourSeniors
+
+{% for page in pagination.pages %}
+	{% if page.link %}
+		<li class="Pagination__number"><a href="{{ page.link }}">{{ page.title }}</a></li>
+	{% elseif page.current %}
+		<li class="Pagination__number Pagination__number--current">{{ page.title }}</li>
+	{% else %}
+		<li class="Pagination__number">{{ page.title }}</li>
+	{% endif %}
+{% endfor %}
+
+#}
+<ul class="Pagination{{ classes ? ' ' ~ classes | join( ' ' ) }}">
+	{% apply spaceless %}
+
+		{% if pagination.prev %}
+			<li class="Pagination__item">
+				<a class="Pagination__button Pagination__button--previous" href="{{ pagination.prev.link }}" title="{{ __( 'Précédent', 'VacancesPourSeniors' ) }}">
+					{% include 'svg/use.html.twig' with { icon: 'arrow-left' } only %}
+				</a>
+			</li>
+		{% endif %}
+
+		{% if pagination.next is iterable %}
+			<li class="Pagination__item">
+				<a class="Pagination__button Pagination__button--next" href="{{ pagination.next.link }}" title="{{ __( 'Suivant', 'VacancesPourSeniors' ) }}">
+					{% include 'svg/use.html.twig' with { icon: 'arrow-right' } only %}
+				</a>
+			</li>
+		{% endif %}
+
+	{% endapply %}
+</ul>

@@ -2,44 +2,64 @@
 
 Tease: residence
 
-@param arr residence
+@param arr post
 @author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
 @package VacancesPourSeniors
 @see https://search.google.com/structured-data/testing-tool
 @see https://schema.org/
 
 #}
-<meta itemprop="url" content="{{ residence.link }}" />
+<meta itemprop="url" content="{{ post.link }}" />
 
-<article id="tease-residence-{{ residence.id }}" class="Tease-residence" role="article" itemscope itemtype="http://schema.org/Resort">
+<article id="tease-residence-{{ post.id }}" class="Tease" role="article" itemscope itemtype="http://schema.org/Resort">
 
-	{% spaceless %}
-		<a class="Tease-residence__header" href="{{ residence.link }}">
-			{% if get_the_residence_thumbnail( residence.id ) %}
-				<img class="Tease-residence__thumbnail" itemprop="image" content="{{ Image( get_the_residence_thumbnail( residence.id ) ).src }}" src="{{ Image( get_the_residence_thumbnail( residence.id ) ).src | resize( 289, 176 ) }}" alt="{{ get_the_residence_type_name( residence.id ) }} {{ residence.title }} {{ get_the_residence_group_name( residence.id ) }}" width="289" height="176">
+	{% apply spaceless %}
+		<a class="Tease__header" href="{{ post.link }}">
+			{% if get_the_residence_thumbnail( post.id ) %}
+				<img
+					class="Tease__thumbnail"
+					itemprop="image"
+					content="{{ Image( get_the_residence_thumbnail( post.id ) ).src }}"
+					src="{{ Image( get_the_residence_thumbnail( post.id ) ).src | resize( 289, 176 ) }}"
+					alt="{{ get_the_residence_type_name( post.id ) }} {{ post.title }} {{ get_the_residence_group_name( post.id ) }}"
+					width="289"
+					height="176"
+				>
 			{% endif %}
 		</a>
-	{% endspaceless %}
+	{% endapply %}
 
-	<div class="Tease-residence__body">
-		<h2 class="Tease-residence__title h4" title="{{ get_the_residence_type_name( residence.id ) }} {{ get_the_residence_group_name( residence.id ) }} {{ residence.title }}">
-			<meta itemprop="name" content="{{ get_the_residence_type_name( residence.id ) }} {{ get_the_residence_group_name( residence.id ) }} {{ residence.title }}">
-			<a href="{{ residence.link }}">{{- get_the_residence_group_name( residence.id ) }} {{ residence.title -}}</a>
+	<div class="Tease__body">
+		<h2 class="Tease__title h4" title="{{ get_the_residence_type_name( post.id ) }} {{ get_the_residence_group_name( post.id ) }} {{ post.title }}">
+			<meta itemprop="name" content="{{ get_the_residence_type_name( post.id ) }} {{ get_the_residence_group_name( post.id ) }} {{ post.title }}">
+			<a href="{{ post.link }}">{{- get_the_residence_group_name( post.id ) }} {{ post.title -}}</a>
 		</h2>
-		<div class="Tease-residence__text">
-			{{- residence.get_field( 'presentation' ) -}}
+
+		<div class="Tease__text">
+			{% if post.get_field( 'presentation' ) %}
+				{{- post.get_field( 'presentation' ) -}}
+			{% else %}
+				{{- post.get_field( 'opinion' ) | striptags | truncate( 20, '&hellip;' ) -}}
+			{% endif %}
 		</div>
 	</div>
 
-	<footer class="Tease-residence__footer">
-		<span class="Badge Badge--lightest Tease-residence__code">{{- get_the_residence_code( residence.id ) -}}</span>
-		<div class="Tease-residence__location" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" title="{{ residence.get_field( 'city' ) }}, {{ get_the_residence_region( residence.id ) }}">
-			<span itemprop="addressLocality">{{ residence.get_field( 'city' ) }}</span>, <span class="addressRegion">{{ get_the_residence_region( residence.id ) }}</span>
-			<meta itemprop="postalCode" content="{{ residence.postal_code }}">
-			<meta itemprop="streetAddress" content="{{ residence.address }}">
+	<footer class="Tease__footer">
+
+		{%- if get_the_code( post.id ) -%}
+			<span class="Badge Badge--lightest Tease__code">{{- get_the_code( post.id ) -}}</span>
+		{%- endif -%}
+
+		<div class="Tease__location" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress" title="{{ get_the_city_name( post.id ) }}, {{ get_the_region_name( post.id ) }}">
+			{%- if get_the_city_name( post.id ) -%}
+				<span itemprop="addressLocality">{{ get_the_city_name( post.id ) }}</span>,&nbsp;
+			{%- endif -%}
+			<span>{{- get_the_region_name( post.id ) -}}</span>
+			<meta itemprop="postalCode" content="{{ post.postal_code }}">
+			<meta itemprop="streetAddress" content="{{ post.address }}">
 		</div>
-		<meta itemprop="priceRange" content="{{ residence.price.monthly_prices | default( '0' ) }}">
-		{# @TODO Get default telephone number from settings #}
-		<meta itemprop="telephone" content="{{ residence.phone | default( '05 46 95 09 56' )}}">
+
+		<meta itemprop="priceRange" content="{{ post.price.monthly_prices | default( '0' ) }}">
+		<meta itemprop="telephone" content="{{ post.phone | default( '05 46 95 09 56' )}}">
 	</footer>
 </article>

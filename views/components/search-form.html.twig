@@ -1,0 +1,23 @@
+{#
+
+Search form
+
+#}
+<form class="Form Form--search" method="get" action="{{ site.url }}/">
+
+	<input type="hidden" name="post_type" value="residence">
+
+	<div class="Form__group margin-top-3">
+		<label class="Form__label">
+			<span class="Form__label__title">{{- __( 'Rechercher', 'VacancesPourSeniors' ) -}}</span>
+			<div class="Form__control-wrap">
+				<input id="residence" class="Form__control w-100" name="s" type="text" value="" placeholder="{{ __( 'Résidence', 'VacancesPourSeniors' ) }}">
+			</div>
+		</label>
+	</div>
+
+	<div class="Form__group">
+		<button class="Button Button-primary w-100" type="submit">{{- __( 'Rechercher', 'VacancesPourSeniors' ) -}}</button>
+	</div>
+
+</form>

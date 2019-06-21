@@ -1,0 +1,66 @@
+{#
+
+Tease: special offers
+
+@param arr post
+@author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+@package VacancesPourSeniors
+@see https://search.google.com/structured-data/testing-tool
+@see https://schema.org/
+
+#}
+<meta itemprop="url" content="{{ post.link }}" />
+
+<article id="tease-special-offers-{{ post.id }}" class="Tease" role="article" itemscope itemtype="http://schema.org/NewsArticle">
+	{% apply spaceless %}
+		<a class="Tease__header" href="{{ post.link }}">
+			{% if post.thumbnail %}
+				<img
+					class="Tease__thumbnail"
+					itemprop="image"
+					content="{{ Image( post.thumbnail ).src }}"
+					src="{{ Image( post.thumbnail ).src | resize( 289, 176 ) }}"
+					alt="{{ post.title }}"
+					width="289"
+					height="176"
+				>
+				<meta itemprop="height" content="289">
+	   			<meta itemprop="width" content="176">
+			{% endif %}
+		</a>
+	{% endapply %}
+
+	<div class="Tease__body">
+		<h2 class="Tease__title h4" title="{{ post.title }}">
+			<a itemprop="headline" href="{{ post.link }}">{{ post.title -}}</a>
+			<meta itemprop="datePublished" content="{{ post.date | date( 'Y-m-d' ) }}">
+		</h2>
+
+		<div class="Tease__text">
+			{% if post.excerpt %}
+				{{- post.excerpt -}}
+			{% else %}
+				{{- post.content | striptags | truncate( 20, '&hellip;' ) -}}
+			{% endif %}
+		</div>
+
+		<meta itemprop="description" content="{{ post.excerpt }}">
+	</div>
+
+	<footer class="Tease__footer">
+		{%- if get_the_code( post.get_field( 'residence' ) ) -%}
+			<span class="Badge Badge--lightest Tease__code">{{- get_the_code( post.get_field( 'residence' ) ) -}}</span>
+		{%- endif -%}
+
+		{% apply spaceless %}
+			<div class="Tease__location" title="{{ get_the_city_name( post.id ) }}, {{ get_the_region_name( post.id ) }}">
+				{% if get_the_city_name( post.get_field( 'residence' ) ) %}
+					<span itemprop="addressLocality">{{ get_the_city_name( post.get_field( 'residence' ) ) }}</span>,
+				{% endif %}
+				{% if get_the_region_name( post.get_field( 'residence' ) ) %}
+				<span itemprop="addressRegion">{{- get_the_region_name( post.get_field( 'residence' ) ) -}}</span>
+				{% endif %}
+			</div>
+		{% endapply %}
+	</footer>
+</article>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Department
+ * Class Region
  *
  * PHP version 7
  *
@@ -9,9 +9,9 @@
  */
 
 /**
- * Department
+ * Region
  */
-class Department {
+class Region {
 
 	/**
 	 * The version of the theme.
@@ -34,26 +34,8 @@ class Department {
 
 		add_action( 'init', array( $this, 'register_taxonomy' ) );
 
-		add_filter( 'manage_edit-department_columns', array( $this, 'add_custom_columns' ) );
-		add_filter( 'manage_edit-department_sortable_columns', array( $this, 'sortable_code_column' ) );
-
-		add_action( 'manage_department_custom_column', array( $this, 'render_custom_columns' ), 10, 3 );
-	}
-
-	function get_residences() {
-		$args = array(
-			'post_type'   => 'residence',
-			'numberposts' => -1,
-		);
-		$residences = get_posts( $args );
-
-		return $residences;
-	}
-
-	function sortable_code_column( $columns ) {
-    	$columns['code'] = 'code';
-
-    	return $columns;
+		add_filter( 'manage_edit-region_columns', array( $this, 'add_custom_columns' ) );
+		add_action( 'manage_region_custom_column', array( $this, 'render_custom_columns' ), 10, 3 );
 	}
 
 	/**
@@ -65,13 +47,12 @@ class Department {
 
 		foreach( $columns as $key => $value ) {
 
-			if ( $key === 'posts' ) {
-				$new_columns['code']       = __( 'Code Insee', 'VacancesPourSeniors' );
-				$new_columns['cities'] = __( 'Villes', 'VacancesPourSeniors' );
-				$new_columns['residences'] = __( 'Résidences', 'VacancesPourSeniors' );
+			$new_columns[ $key ] = $value;
+
+			if ( $key === 'name' ) {
+				$new_columns['city']  = __( 'Ville', 'VacancesPourSeniors' );
 			}
 
-			$new_columns[ $key ] = $value;
 		}
 		return $new_columns;
 	}
@@ -82,59 +63,20 @@ class Department {
 	 * @see https://codex.wordpress.org/Plugin_API/Filter_Reference/manage_$taxonomy_id_columns
 	 */
 	function render_custom_columns( $value, $column_name, $term_id ) {
-		$residences = $this->get_residences();
 
 		switch ( $column_name ) {
-			case 'code':
-				$code = get_field( 'code', 'department_' . $term_id );
-
-				if ( null !== $code ) {
-					echo $code;
-				} else {
-					echo '—';
-				}
-
-				break;
-
-			case 'cities':
-				$terms = get_terms( 'city' );
-				$cities = array();
+			case 'city':
+				$terms = get_terms( array( 'taxonomy' => 'city' ) );
+				$cities = [];
 
 				foreach( $terms as $term ) {
-					$department = get_field( 'department', 'city_' . $term->term_id );
 
-					if ( is_object( $department ) && ($department->term_id === $term_id) ) {
+					$region = get_field( 'region', 'city_' . $term->term_id );
+
+					if ( is_object( $region ) && $region->term_id === $term_id ) {
 						array_push(
 							$cities,
 							'<a href="' . get_edit_term_link( $term->term_id, 'city' ) . '">' . $term->name . '</a>'
-						);
-					}
-				}
-
-				if ( ! empty( $cities ) ) {
-					echo implode( ', ', $cities );
-				} else {
-					echo '—';
-				}
-
-				break;
-
-			case 'residences':
-				$cities = array();
-
-				foreach( $residences as $residence ) {
-
-					$city = get_the_city( $residence->ID );
-					$department = null;
-
-					if ( is_object( $city ) ) {
-						$department = get_field( 'department', 'city_' . $city->term_id );
-					}
-
-					if ( is_object( $department ) && ( $department->term_id === $term_id ) ) {
-						array_push(
-							$cities,
-							'<a href="' . get_edit_post_link( $residence->ID ) . '">' . $residence->post_title . '</a>'
 						);
 					}
 				}
@@ -161,9 +103,9 @@ class Department {
 	public function register_taxonomy() {
 
 		$labels = array(
-			'name'                       => _x( 'Départments', 'Taxonomy General Name', 'VacancesPourSeniors' ),
-			'singular_name'              => _x( 'Département', 'Taxonomy Singular Name', 'VacancesPourSeniors' ),
-			'menu_name'                  => __( 'Département', 'VacancesPourSeniors' ),
+			'name'                       => _x( 'Régions', 'Taxonomy General Name', 'VacancesPourSeniors' ),
+			'singular_name'              => _x( 'Région', 'Taxonomy Singular Name', 'VacancesPourSeniors' ),
+			'menu_name'                  => __( 'Région', 'VacancesPourSeniors' ),
 			'all_items'                  => __( 'All Items', 'VacancesPourSeniors' ),
 			'parent_item'                => __( 'Parent Item', 'VacancesPourSeniors' ),
 			'parent_item_colon'          => __( 'Parent Item:', 'VacancesPourSeniors' ),
@@ -197,6 +139,6 @@ class Department {
 			'show_admin_column'  => true,
 			'show_in_rest'       => true,
 		);
-		register_taxonomy( 'department', array( 'discovery' ), $args );
+		register_taxonomy( 'region', array(), $args );
 	}
 }

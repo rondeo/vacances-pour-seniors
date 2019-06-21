@@ -1,0 +1,48 @@
+{
+    "key": "group_5d0b1a025eb96",
+    "title": "Options",
+    "fields": [
+        {
+            "key": "field_5d0b1a17ecc34",
+            "label": "Pictogramme",
+            "name": "pictogram",
+            "type": "image",
+            "instructions": "Indiquer le pictogramme lié à l'espace de confort",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "preview_size": "thumbnail",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "taxonomy",
+                "operator": "==",
+                "value": "residence_comfort"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "Options des espaces de confort",
+    "modified": 1561008745
+}

@@ -1,0 +1,16 @@
+{#
+
+Stars
+
+@param int stars
+@author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+@package MaisonRetraiteSelection
+
+#}
+<div class="Stars">
+	{% apply spaceless %}
+    	{% for i in range( 1, stars ) %}
+        	{% include 'svg/use.html.twig' with { icon: 'star' } only %}
+    	{% endfor %}
+	{% endapply %}
+</div>

@@ -1,0 +1,78 @@
+{#
+
+Comment form
+
+@package VacancesPourSeniors
+@author Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)
+
+#}
+{% import 'macros/rating.html.twig' as macros %}
+
+<div class="Comment-form margin-top-3">
+
+    <form class="Form Form--comment" method="post" action="{{ site.site_url~'/wp-comments-post.php' }}">
+
+		<div class="d-none">
+			<input name="comment_post_ID" value="{{ residence.id }}" type="hidden">
+			<input name="comment_parent"  value="{{ comment.ID | default( '0' ) }}" type="hidden">
+		</div>
+
+        {% if user %}
+			<input class="Form__control" type="hidden" name="email" value="{{ user.email }}">
+            <input type="hidden" name="author" value="{{ user.name }}">
+            <input type="hidden" name="url" value="{{ user.link }}">
+        {% else %}
+			<div class="Form__group">
+				<label class="Form__label">
+					<span class="Form__label__title">{{- __( 'Adresse email', 'VacancesPourSeniors' ) -}}</span>
+					<span class="Form__control-wrap">
+						<input class="Form__control w-100" required name="email" type="email" placeholder="{{ __( 'Email', 'VacancesPourSeniors' ) }}">
+					</span>
+				</label>
+			</div>
+			<div class="Form__group">
+				<label class="Form__label">
+					<span class="Form__label__title">{{- __( 'Auteur', 'VacancesPourSeniors' ) -}}</span>
+					<span class="Form__control-wrap">
+	                	<input class="Form__control w-100" required name="author" type="text" placeholder="{{ __( 'Auteur', 'VacancesPourSeniors' ) }}">
+					</span>
+	            </label>
+			</div>
+
+        {% endif %}
+
+		<div class="Form__group">
+			<label class="Form__label">
+				<span class="Form__label__title">{{- __( 'Titre du commentaire', 'VacancesPourSeniors' ) -}}</span>
+				<span class="Form__control-wrap">
+					<input class="Form__control w-100" name="title" type="text" placeholder="{{- __( 'Titre', 'VacancesPourSeniors' ) -}}">
+				</span>
+			</label>
+		</div>
+
+		<div class="Form__group">
+        	<label class="Form__label">
+				<span class="Form__label__title">{{- __( 'Commentaire', 'VacancesPourSeniors' ) -}}</span>
+				<span class="Form__control-wrap">
+            		<textarea class="Form__control w-100" placeholder="{{ __( 'Laisser votre avis...', 'VacancesPourSeniors' ) }}" name="comment"></textarea>
+				</span>
+        	</label>
+		</div>
+
+		{% for rating in ratings %}
+			<div class="Form__group">{{- macros.rating( rating ) -}}</div>
+		{% endfor %}
+
+		<div class="Form__group">
+			{% apply spaceless %}
+        		<button class="Button Button-primary" type="submit" name="Submit" class="btn">
+					{{ __( 'Déposer votre avis', 'VacancesPourSeniors' ) }}
+				</button>
+        		<button class="Button Button-outline-light margin-left-3" type="reset">
+					{{ __( 'Cancel', 'VacancesPourSeniors' ) -}}
+				</button>
+			{% endapply %}
+		</div>
+
+    </form>
+</div>

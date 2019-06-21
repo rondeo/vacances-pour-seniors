@@ -97,7 +97,7 @@ Single: Residence
 							<div class="margin-bottom-3 flex-column">
 								<h2 class="h4 margin-x-2 margin-top-0">{{- __( 'Prenez contact en toute sérénité', 'VacancesPourSeniors' ) -}}</h2>
 								<p class="Single-residence__address margin-x-2 margin-y-0">
-									{{- get_the_residence_group_name() }}{{ residence.title }}, {{ residence.get_field( 'contact' ).address }}, {{ residence.get_field( 'contact' ).postal_code }} {{ get_the_city_name() -}}
+									{{- get_the_residence_group_name() }} {{ residence.title }}, {{ residence.get_field( 'contact' ).address }}, {{ residence.get_field( 'contact' ).postal_code }} {{ get_the_city_name() -}}
 								</p>
 							</div>
 
@@ -243,17 +243,25 @@ Single: Residence
 			<div class="col-12 col-sm-6 col-md-5">
 				<div class="Note">
 					<h2 class="Note__title h3 color-red-very-soft margin-bottom-2">{{- __( 'Note globale', 'VacancesPourSeniors' ) -}}</h2>
+					{% if residence.get_field( 'note' ).general %}
+						<h3 class="h4">{{- __( 'Note VPS', 'VacancesPourSeniors' ) -}}</h3>
+						<p class="color-gray-very-dark">{{- residence.get_field( 'note' ).general -}}/10</p>
+					{% endif %}
 
-					<ul class="Note__items">
-						{% apply spaceless %}
-							{% for rating in ratings %}
-								<li class="d-flex align-items-center">
-									<p class="Comment__rating__label">{{- rating.label -}}</p>
-									{% include 'partials/stars.html.twig' with { stars: random( 0, 5 ) } %}
-								</li>
-							{% endfor %}
-						{% endapply %}
-					</ul>
+					{% if get_average_ratings_residence( residence.id ) is iterable and get_average_ratings_residence( residence.id ) is not empty %}
+						<h3 class="h4">{{- __( 'Note moyenne des utilisateurs', 'VacancesPourSeniors' ) -}}</h3>
+
+						<ul class="Note__items">
+							{% apply spaceless %}
+								{% for average in get_average_ratings_residence( residence.id ) %}
+									<li class="d-flex align-items-center">
+										<p class="Comment__rating__label">{{- average.label -}}</p>
+										{% include 'partials/stars.html.twig' with { stars: average.note } %}
+									</li>
+								{% endfor %}
+							{% endapply %}
+						</ul>
+					{% endif %}
 				</div>
 			</div>
 			<div class="col-12 col-sm-6">
@@ -284,11 +292,11 @@ Single: Residence
 						</div>
 					</details>
 
-					{% if residence.comments | length > 2 %}
+					{# {% if residence.comments | length > 2 %}
 						<button class="Button Button-outline-light" type="button">
 							{{- __( 'Plus d\'avis', 'VacancesPourSeniors' ) -}}
 						</button>
-					{% endif %}
+					{% endif %} #}
 				</div>
 			</div>
 		</div>

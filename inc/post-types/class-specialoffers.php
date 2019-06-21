@@ -223,8 +223,20 @@ class SpecialOffers {
 	 * Load posts with AJAX request.
 	 */
 	public function ajax_load_special_offers() {
-		$offset = isset( $_GET['offset'] ) ? $_GET['offset'] : 0;
-		$posts_per_page = isset( $_GET['posts_per_page'] ) ? $_GET['posts_per_page'] : 3;
+		if ( ! isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_key( $_GET['nonce'] ), 'security' ) ) {
+			return false;
+		}
+
+		$offset         = 0;
+		$posts_per_page = 3;
+
+		if ( isset( $_GET['offset'] ) ) {
+			$offset = sanitize_text_field( wp_unslash( $_GET['offset'] ) );
+		}
+
+		if ( isset( $_GET['posts_per_page'] ) ) {
+			$posts_per_page = sanitize_text_field( wp_unslash( $_GET['posts_per_page'] ) );
+		}
 
 		$args = array(
 			'post_type'      => 'special_offers',
@@ -233,7 +245,8 @@ class SpecialOffers {
 			'post_status'    => 'publish',
 		);
 
-		$context = Timber::get_context();
+		// Timber.
+		$context          = Timber::get_context();
 		$context['posts'] = Timber::get_posts( $args );
 
 		Timber::render( 'partials/archive-listing.html.twig', $context );

@@ -48,8 +48,8 @@ class Residence {
 		add_action( 'wp_ajax_nopriv_ajax_load_residences', array( $this, 'ajax_load_residences' ) );
 		add_action( 'wp_ajax_ajax_load_residences', array( $this, 'ajax_load_residences' ) );
 
-		// add_action( 'quick_edit_custom_box', array( $this, 'add_quick_edit' ), 10, 2 );
-		// add_action( 'save_post_residence', array( $this, 'save_quick_edit' ), 10, 3 );
+		add_action( 'quick_edit_custom_box', array( $this, 'add_quick_edit' ), 10, 2 );
+		add_action( 'save_post_residence', array( $this, 'save_quick_edit' ), 10, 3 );
 
 		// add_filter( 'pre_get_posts', array( $this, 'pre_get_residences' ) );
 	}
@@ -74,9 +74,9 @@ class Residence {
 				$context = Timber::get_context();
 
 				$context['options'] = Timber::get_terms( $args );
-				$context['title'] = __( 'Type', 'VacancesPourSeniors' );
-				$context['name']  = $column_name;
-				$context['type']  = 'select';
+				$context['title']   = __( 'Type', 'VacancesPourSeniors' );
+				$context['name']    = $column_name;
+				$context['type']    = 'select';
 
 				Timber::render( 'partials/custom-column.html.twig', $context );
 
@@ -139,36 +139,35 @@ class Residence {
 	/**
 	 * Save quick edit
 	 *
-	 * @param int $term_id Term ID.
-	 * @param int $tt_id   Term taxonomy ID.
+	 * @param int $post_ID Post ID.
+	 * @param obj $post Post object.
+ 	 * @param bool $update Whether this is an existing post being updated or not.
 	 *
-	 * @see https://developer.wordpress.org/reference/hooks/edited_taxonomy/
+	 * @see https://developer.wordpress.org/reference/hooks/save_post_post-post_type/
 	 */
-	public function save_quick_edit( $post_id, $post, $update ) {
+	public function save_quick_edit( $post_ID, $post, $update ) {
 		if ( empty( $_POST ) ) {
-			return $term_id;
+			return $post_ID;
 		}
-
-		// residence_status
 
 		// Type.
 		if ( isset( $_POST['taxonomy-residence_type'] ) && ! empty( $_POST['taxonomy-residence_type'] ) ) {
-			wp_set_post_terms( $post_id, array( intval( $_POST['taxonomy-residence_type'] ) ), 'residence_type' );
+			wp_set_post_terms( $post_ID, array( intval( $_POST['taxonomy-residence_type'] ) ), 'residence_type' );
 		}
 
 		// Group.
 		if ( isset( $_POST['taxonomy-residence_group'] ) && ! empty( $_POST['taxonomy-residence_group'] ) ) {
-			wp_set_post_terms( $post_id, array( intval( $_POST['taxonomy-residence_group'] ) ), 'residence_group' );
+			wp_set_post_terms( $post_ID, array( intval( $_POST['taxonomy-residence_group'] ) ), 'residence_group' );
 		}
 
 		// Status.
 		if ( isset( $_POST['taxonomy-residence_status'] ) && ! empty( $_POST['taxonomy-residence_status'] ) ) {
-			wp_set_post_terms( $post_id, array( intval( $_POST['taxonomy-residence_status'] ) ), 'residence_status' );
+			wp_set_post_terms( $post_ID, array( intval( $_POST['taxonomy-residence_status'] ) ), 'residence_status' );
 		}
 
 		// City.
 		if ( isset( $_POST['taxonomy-city'] ) && ! empty( $_POST['taxonomy-city'] ) ) {
-			wp_set_post_terms( $post_id, array( intval( $_POST['taxonomy-city'] ) ), 'city' );
+			wp_set_post_terms( $post_ID, array( intval( $_POST['taxonomy-city'] ) ), 'city' );
 		}
 	}
 
@@ -215,26 +214,26 @@ class Residence {
 		);
 
 		$args = array(
-			'label'                 => __( 'Résidence', 'VacancesPourSeniors' ),
-			'description'           => __( 'Description de la Résidence', 'VacancesPourSeniors' ),
-			'labels'                => $labels,
-			'supports'              => array( 'title', 'comments', 'revisions' ),
-			'taxonomies'            => array( 'residence_type', 'residence_group', 'residence_status', 'residence_comfort', 'residence_social_life', 'residence_accommodation', 'city' ),
-			'hierarchical'          => false,
-			'public'                => true,
-			'show_ui'               => true,
-			'show_in_menu'          => true,
-			'menu_position'         => 5,
-			'menu_icon'             => 'dashicons-admin-multisite',
-			'show_in_admin_bar'     => true,
-			'show_in_nav_menus'     => true,
-			'can_export'            => true,
-			'has_archive'           => true,
-			'exclude_from_search'   => false,
-			'publicly_queryable'    => true,
-			'capability_type'       => 'post',
-			'rewrite'               => $rewrite,
-			'show_in_rest'          => true,
+			'label'               => __( 'Résidence', 'VacancesPourSeniors' ),
+			'description'         => __( 'Description de la Résidence', 'VacancesPourSeniors' ),
+			'labels'              => $labels,
+			'supports'            => array( 'title', 'comments', 'revisions' ),
+			'taxonomies'          => array( 'residence_type', 'residence_group', 'residence_status', 'residence_comfort', 'residence_social_life', 'residence_accommodation', 'city' ),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'menu_position'       => 5,
+			'menu_icon'           => 'dashicons-admin-multisite',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'post',
+			'rewrite'             => $rewrite,
+			'show_in_rest'        => true,
 		);
 		register_post_type( 'residence', $args );
 	}
@@ -256,6 +255,7 @@ class Residence {
 		}
 
 		$text = sprintf(
+			/* translators: %1$s: number posts %2$s: singular name %3$s: name %4$s: pending */
 			_n( '%1$s %4$s%2$s', '%1$s %4$s%3$s', $num_posts->{ $post_status } ),
 			number_format_i18n( $num_posts->{ $post_status } ),
 			strtolower( $object->labels->singular_name ),
@@ -289,7 +289,9 @@ class Residence {
 
 		<?php
 
-		if ( 'residence' !== $typenow ) return false;
+		if ( 'residence' !== $typenow ) {
+			return false;
+		}
 
 		?>
 		<style>
@@ -346,22 +348,29 @@ class Residence {
 		switch ( $column_name ) {
 			case 'thumbnail':
 				$thumbnail = get_the_residence_thumbnail( $post_id );
-
-				// var_dump( $thumbnail );
+				$html      = '—';
 
 				if ( is_array( $thumbnail ) ) {
-					echo '<a href="' . get_edit_post_link( $post_id ) . '">';
-					echo '<img src="' . $thumbnail['sizes']['thumbnail'] . '" alt="' . $thumbnail['alt'] . '" width="150" height="150">';
-					echo '</a>';
+					$html  = '<a href="' . esc_attr( get_edit_post_link( $post_id ) ) . '">';
+					$html .= '<img src="' . esc_attr( $thumbnail['sizes']['thumbnail'] ) . '" alt="' . esc_attr( $thumbnail['alt'] ) . '" width="150" height="150">';
+					$html .= '</a>';
+
+					echo wp_kses_post( $html );
 				} else {
-					echo '—';
+					echo wp_kses_post( $html );
 				}
 
 				break;
 		}
 	}
 
-	function pre_get_residences( $query ) {
+	/**
+	 * Pre get residences
+	 *
+	 * @param $obj $query The current WP_Query object.
+	 * @return obj $query
+	 */
+	public function pre_get_residences( $query ) {
 		if ( is_admin() ) {
 			return false;
 		}
@@ -370,9 +379,9 @@ class Residence {
 			return false;
 		}
 
-	    if ( $query->is_search ) {
-	        $query->set( 'post_type', array( 'residence' ) );
-	    }
+		if ( $query->is_search ) {
+			$query->set( 'post_type', array( 'residence' ) );
+		}
 		return $query;
 	}
 
@@ -380,8 +389,20 @@ class Residence {
 	 * Load posts with AJAX request.
 	 */
 	public function ajax_load_residences() {
-		$offset = isset( $_GET['offset'] ) ? $_GET['offset'] : 0;
-		$posts_per_page = isset( $_GET['posts_per_page'] ) ? $_GET['posts_per_page'] : 3;
+		if ( ! isset( $_GET['nonce'] ) && ! wp_verify_nonce( sanitize_key( $_GET['nonce'] ), 'security' ) ) {
+			return false;
+		}
+
+		$offset         = 0;
+		$posts_per_page = 3;
+
+		if ( isset( $_GET['offset'] ) ) {
+			$offset = sanitize_text_field( wp_unslash( $_GET['offset'] ) );
+		}
+
+		if ( isset( $_GET['posts_per_page'] ) ) {
+			$posts_per_page = sanitize_text_field( wp_unslash( $_GET['posts_per_page'] ) );
+		}
 
 		$args = array(
 			'post_type'      => 'residence',
@@ -390,7 +411,8 @@ class Residence {
 			'post_status'    => 'publish',
 		);
 
-		$context = Timber::get_context();
+		// Timber.
+		$context          = Timber::get_context();
 		$context['posts'] = Timber::get_posts( $args );
 
 		Timber::render( 'partials/archive-listing.html.twig', $context );

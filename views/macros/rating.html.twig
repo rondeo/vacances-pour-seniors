@@ -1,0 +1,17 @@
+{#
+
+Macros: Rating
+
+#}
+{% macro rating( rating ) %}
+	<p class="Comment-form__{{ rating.name }} Comment-form__rating">
+		<label for="{{ rating.name }}">{{ rating.label }}<span class="required">*</span></label>
+		<div class="commentratingbox">
+			{% for i in range( 1, 5 ) %}
+				<span class="commentrating">
+					<input type="radio" name="{{ rating.name }}" id="{{ rating.id | default( rating.name ) }}" value="{{ i }}">{{ i }}
+				</span>
+			{% endfor %}
+		</div>
+	</p>
+{% endmacro %}

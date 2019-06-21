@@ -1,0 +1,20 @@
+{#
+
+Socials
+
+@package VacancesPourSeniors
+
+#}
+{% if socials is iterable %}
+	<ul class="Socials">
+		{% apply spaceless %}
+			{% for social in socials %}
+				<li class="Socials__item">
+					<a class="Socials__link Socials__link--{{ social.slug }}" href="{{ social.link }}" target="_blank" title="{{ social.title }}">
+						{% include 'svg/use.html.twig' with { icon: social.slug } %}
+					</a>
+				</li>
+			{% endfor %}
+		{% endapply %}
+	</ul>
+{% endif %}

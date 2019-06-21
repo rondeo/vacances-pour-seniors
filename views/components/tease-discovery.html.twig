@@ -40,7 +40,7 @@ Tease: post
 			{% if post.excerpt %}
 				{{- post.excerpt -}}
 			{% else %}
-				{{ post.content | slice( 0, 100 ) ~ '...'  }}
+				{{- ( post.content | striptags ) | slice( 0, 100 ) ~ '...' -}}
 			{% endif %}
 		</div>
 
@@ -49,15 +49,19 @@ Tease: post
 
 	<footer class="Tease__footer">
 
-		{%- if get_the_code( post.id ) -%}
-			<span class="Badge Badge--lightest Tease__code">{{- get_the_code( post.id ) -}}</span>
+		{%- if get_the_department_code( post.id ) -%}
+			<span class="Badge Badge--lightest Tease__code">{{- get_the_department_code( post.id ) -}}</span>
 		{%- endif -%}
 
-		{% if get_the_city_name( post.id ) and get_the_region( post.id ) %}
-		<div class="Tease__location" title="{{ get_the_city_name( post.id ) }}, {{ get_the_region( post.id ) }}">
-			<span itemprop="addressLocality">{{ get_the_city_name( post.id ) }}</span>,&nbsp;
-			<span itemprop="addressRegion">{{- get_the_region( post.id ) -}}</span>
+		<div class="Tease__location" title="{{ get_the_city_name( post.id ) }}, {{ get_the_region_name( post.id ) }}">
+			{% if get_the_city_name( post.id ) %}
+				<span itemprop="addressLocality">{{ get_the_city_name( post.id ) }}</span>,
+			{% endif %}
+
+			{% if get_the_region_name( post.id ) %}
+				<span itemprop="addressRegion">{{- get_the_region_name( post.id ) -}}</span>
+			{% endif %}
 		</div>
-		{% endif %}
+
 	</footer>
 </article>

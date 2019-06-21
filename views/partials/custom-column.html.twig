@@ -1,0 +1,27 @@
+{#
+
+Column
+
+#}
+<fieldset>
+	<div class="inline-edit-col">
+		<label>
+			<span class="title">{{- title -}}</span>
+			<span class="input-text-wrap">
+
+				{% if type == 'select' %}
+					<select name="{{ name }}">
+						{% for option in options %}
+							<option value="{{ option.term_id }}">{{ option.name }}</option>
+						{% endfor %}
+					</select>
+				{% endif %}
+
+				{% if type == 'input' %}
+					<input type="text" name="{{ name }}" value="">
+				{% endif %}
+
+			</span>
+		</label>
+	</div>
+</fieldset>

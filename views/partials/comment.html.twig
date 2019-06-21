@@ -1,0 +1,25 @@
+
+<div class="Comment" id="comment-{{ comment.ID }}">
+
+	{% set sum = 0 %}
+	{% for rating in ratings %}
+  		{% set sum = sum + attribute( comment, rating.id ) %}
+	{% endfor %}
+
+	{% include 'partials/stars.html.twig' with { stars: sum / 5 } %}
+	<h5 class="Comment__author">{{- comment.title ? "#{comment.title}, #{__( 'par', 'VacancesPourSeniors' )} " -}}{{- comment.author.name -}}</h5>
+	<div class="Comment__text margin-y-1">{{- comment.comment_content | wpautop -}}</div>
+
+	<ul class="Comment__ratings d-none">
+		{% apply spaceless %}
+			{% for rating in ratings %}
+				<li class="d-flex align-items-center">
+					<p class="Comment__rating__label">{{- rating.label -}}</p>
+					{% include 'partials/stars.html.twig' with { stars: attribute( comment, rating.id ) } %}
+				</li>
+			{% endfor %}
+		{% endapply %}
+	</ul>
+
+	<div class="Comment__date">{{- comment.date -}}</div>
+</div>

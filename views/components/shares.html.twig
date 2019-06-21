@@ -1,0 +1,20 @@
+{#
+
+Shares
+
+@package VacancesPourSeniors
+
+#}
+{% if shares is iterable %}
+	<ul class="Shares">
+		{% apply spaceless %}
+			{% for share in shares %}
+				<li class="Shares__item">
+					<a class="Shares__link Shares__link--{{ share.slug }}" href="{{ share.url }}" target="_blank" title="{{ social.title }}">
+						{% include 'svg/use.html.twig' with { icon: share.slug } %}
+					</a>
+				</li>
+			{% endfor %}
+		{% endapply %}
+	</ul>
+{% endif %}

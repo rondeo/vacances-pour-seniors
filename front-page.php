@@ -16,7 +16,7 @@ if ( ! class_exists( 'Timber' ) ) {
 
 $context = Timber::context();
 
-$context['post']       = Timber::get_post();
+// $context['post']       = Timber::get_post();
 $context['pagination'] = Timber::get_pagination();
 $context['node_type']  = 'frontPage';
 $context['body_class'] = 'index';

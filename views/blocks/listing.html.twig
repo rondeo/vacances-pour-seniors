@@ -6,9 +6,19 @@
 
 		<ul class="Listing__items row">
 			<li class="col-12 col-md-3">
-				<p class="Listing__subtitle">{{- subtitle -}}</p>
-				<h2 class="Listing__title">{{- title -}}</h2>
-				<div class="Listing__text">{{- text -}}</div>
+
+				{% if subtitle %}
+					<p class="Listing__subtitle">{{- subtitle -}}</p>
+				{% endif %}
+
+				{% if title %}
+					<h2 class="Listing__title">{{- title -}}</h2>
+				{% endif %}
+
+				{% if text %}
+					<div class="Listing__text">{{- text -}}</div>
+				{% endif %}
+
 			</li>
 
 			<li class="col-12 col-md-9">
@@ -24,7 +34,9 @@
 		<footer class="row margin-top-3">
 			<div class="col-12 col-md-3">
 				{% if link %}
-					<a class="Button Button-secondary w-100" href="{{ link.url }}">{{- link.label | default( __( 'Tous les articles', 'VacancesPourSeniors' ) ) -}}</a>
+					<a class="Button Button-secondary w-100 margin-bottom-3 margin-bottom-md-0" href="{{ link.url }}">
+						{{- link.label | default( __( 'Tous les articles', 'VacancesPourSeniors' ) ) -}}
+					</a>
 				{% endif %}
 			</div>
 

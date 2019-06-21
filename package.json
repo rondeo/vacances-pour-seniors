@@ -1,0 +1,82 @@
+{
+    "name": "vacancespourseniors",
+    "version": "1.0.0",
+    "description": "Vacances Pour Seniors website",
+    "main": "dist/main.js",
+    "scripts": {
+        "prod": "node scripts/production.js",
+        "dev": "node scripts/development.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/19h47/vacancespourseniors"
+    },
+    "keywords": [
+        "Timber",
+        "WordPress",
+        "ES6",
+        "SCSS"
+    ],
+    "author": "Jérémy Levron <jeremylevron@19h47.fr> (http://19h47.fr)",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/19h47/vacancespourseniors/issues"
+    },
+    "homepage": "https://github.com/19h47/vacancespourseniors#readme",
+    "dependencies": {
+        "@babel/runtime": "^7.4.5",
+        "architecture": "github:19h47/architecture",
+        "bootstrap": "^4.3.1",
+        "flickity": "^2.2.0",
+        "flickity-as-nav-for": "^2.0.1",
+        "ress": "^1.2.2",
+        "starting-blocks": "^5.0.4"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.4.5",
+        "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+        "@babel/plugin-transform-parameters": "^7.4.4",
+        "@babel/plugin-transform-runtime": "^7.4.4",
+        "@babel/preset-env": "^7.4.5",
+        "autoprefixer": "^9.6.0",
+        "babel-eslint": "^10.0.1",
+        "babel-loader": "^8.0.6",
+        "babel-plugin-dynamic-import-node": "^2.2.0",
+        "clean-webpack-plugin": "^2.0.2",
+        "clear": "^0.1.0",
+        "compression-webpack-plugin": "^2.0.0",
+        "copy-webpack-plugin": "^5.0.3",
+        "css-loader": "^2.1.1",
+        "cssnano": "^4.1.10",
+        "eslint": "^5.16.0",
+        "eslint-config-airbnb-base": "^13.1.0",
+        "eslint-config-standard": "^12.0.0",
+        "eslint-import-resolver-webpack": "^0.11.1",
+        "eslint-loader": "^2.1.2",
+        "eslint-plugin-import": "^2.17.3",
+        "eslint-plugin-node": "^8.0.1",
+        "eslint-plugin-promise": "^4.1.1",
+        "eslint-plugin-standard": "^4.0.0",
+        "file-loader": "^3.0.1",
+        "image-webpack-loader": "^4.6.0",
+        "install": "^0.12.2",
+        "mini-css-extract-plugin": "^0.6.0",
+        "node-sass": "^4.12.0",
+        "npm": "^6.9.0",
+        "ora": "^3.4.0",
+        "postcss-loader": "^3.0.0",
+        "postcss-object-fit-images": "^1.1.2",
+        "purgecss-webpack-plugin": "^1.5.0",
+        "sass-loader": "^7.1.0",
+        "svg-sprite-loader": "^4.1.6",
+        "svg-transform-loader": "^2.0.7",
+        "svgo": "^1.2.2",
+        "svgo-loader": "^2.2.1",
+        "webpack": "^4.34.0",
+        "webpack-cli": "^3.3.4",
+        "webpack-format-messages": "^2.0.5",
+        "webpack-manifest-plugin": "^2.0.4",
+        "webpack-merge": "^4.2.1",
+        "webpack-notifier": "^1.7.0"
+    }
+}

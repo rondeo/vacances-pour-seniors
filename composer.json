@@ -1,0 +1,14 @@
+{
+    "require": {
+        "timber/timber": "^1.9",
+        "vlucas/phpdotenv": "^3.3"
+    },
+    "scripts": {
+        "config-set": "vendor/bin/phpcs --config-set installed_paths wpcs",
+        "lint": "vendor/bin/phpcs --standard=WordPress"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "*",
+        "phpcompatibility/phpcompatibility-wp": "*"
+    }
+}
